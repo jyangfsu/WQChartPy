@@ -23,7 +23,7 @@ contribute.
 
 ## Installation
 
-WQChartPy requires **Python** 3.7 (or higher). We recommend using Anaconda (https://www.anaconda.com/) on Windows or Linux platforms. 
+WQChartPy requires **Python** 3.7 (or higher). We recommend using [Anaconda](https://www.anaconda.com/) on Windows or Linux platforms. 
 
 The easiest way to install is via `pip`:
 
