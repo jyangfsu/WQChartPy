@@ -60,7 +60,7 @@ We recommend to start by executing the workflow scripts provided in the examples
 
 ## License
 
-WQChartPy is distributed under the MIT License. See the [LICENSE](https://github.com/jyangfsu/WQChartPy/LICENSE) file for details.
+WQChartPy is distributed under the MIT License. See the [LICENSE](https://github.com/jyangfsu/WQChartPy/blob/main/LICENSE) file for details.
 
 Copyright (c) 2021 Jing Yang and Ming Ye.
 
