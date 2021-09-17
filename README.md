@@ -39,17 +39,13 @@ To uninstall WQChartPy type:
 
     pip uninstall wqchartpy
     
-Another way is to manually install WQChartPy with setup.py:
+Another way is to manually install WQChartPy with `setup.py`. Preliminary steps to take:
 
-Preliminary steps to take:
-
-    1. Download the package and extract it into a local directory.
+    1. Download the package and extract it into a local directory
 
     2. cd into the root directory where setup.py is located using an Anaconda Prompt
 
     3. Enter: python setup.py install
-    
-    4. Copy the root directory where setup.py is located to C:/ProgramData/Anaconda3/Lib/site-packages/
     
 ## Requirements:
 
@@ -60,13 +56,13 @@ Preliminary steps to take:
     
 ## Getting started with the package
 
-We recommend to start by executing the workflow scripts that provided in the examples folder. 
+We recommend to start by executing the workflow scripts provided in the examples folder. 
 
 ## License
 
-WQChartPy is distributed under the MIT License. See the [LICENSE](https://github.com/jyangfsu/SAMMPy/LICENSE) file for details.
+WQChartPy is distributed under the MIT License. See the [LICENSE](https://github.com/jyangfsu/WQChartPy/LICENSE) file for details.
 
-Copyright (c) 2020 Jing Yang and Ming Ye.
+Copyright (c) 2021 Jing Yang and Ming Ye.
 
 ## Contributing to WQChartPy
 
