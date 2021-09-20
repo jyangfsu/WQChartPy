@@ -11,10 +11,10 @@ import matplotlib.pyplot as plt
 
 from .ions import ions_WEIGHT, ions_CHARGE
 
-def plot_HFED(df, 
-              unit='mg/L', 
-              figname='HFE-D diagram', 
-              figformat='jpg'):
+def plot(df, 
+         unit='mg/L', 
+         figname='HFE-D diagram', 
+         figformat='jpg'):
     """Plot the HFE-D  diagram.
     
     Parameters
@@ -377,6 +377,27 @@ def plot_HFED(df,
     
     return
 
+if __name__ == '__main__':
+    data = {'Sample' : ['sample1', 'sample2', 'sample3', 'sample4', 'sample5', 'sample5'],
+            'Label'  : ['C1', 'C2', 'C2', 'C3', 'C4', 'C4'],
+            'Color'  : ['red', 'blue', 'blue', 'yellow', 'yellow', 'green'],
+            'Marker' : ['o', 'o', 'o', 'o', 'o', 'o'],
+            'Size'   : [30, 30, 30, 30, 30, 30],
+            'Alpha'  : [0.6, 0.6, 0.6, 0.6, 0.6, 0.6],
+            'pH'     : [7.78, 7.78, 7.85, 7.61, 7.45, 7.45],
+            'Ca'     : [205.2, 214.5, 268.7, 215.8, 227.4, 221.8],
+            'Mg'     : [63.77, 66.67, 58.9, 65.57, 69.86, 67.97],
+            'Na'     : [21.36, 22.55, 25.76, 23.45, 32.63, 36.53],
+            'K'      : [1.32, 2.14, 3.78, 2.64, 1.52, 4.24],
+            'HCO3'   : [584.5, 584.5, 571.7, 557.1, 426.2, 484.1],
+            'CO3'    : [0, 0, 0, 0, 0, 0],
+            'Cl'     : [55.89, 56.09, 42.53, 65.27, 63.77, 63.28],
+            'SO4'    : [308.4, 310.4, 521, 359.2, 448.1, 449.1],
+            'NO3'    : [15.64, 14.78, 12.67, 16.2, 17.81, 14.51],
+            'TDS'    : [1258.6, 1274.2, 1507, 1307, 1289.3, 1344.1],
+            }
+    df = pd.DataFrame(data)
+    plot(df, unit='mg/L', figname='HFE-D', figformat='jpg')
     
     
     

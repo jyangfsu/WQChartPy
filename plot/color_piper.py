@@ -30,7 +30,7 @@ def hsvtorgb(H, S, V):
     # conversion (from http://en.wikipedia.org/wiki/HSL_and_HSV)
     C = V * S    
     Hs = H / (np.pi/3)
-    X  = C * (1 - np.abs(np.mod(Hs, 2.0*np.ones_like(Hs)) - 1))
+    X  = C * (1 - np.abs(np.mod(Hs, 2.0 * np.ones_like(Hs)) - 1))
     N  = np.zeros_like(H)
     # create empty RGB matrices    
     R = np.zeros_like(H)
@@ -70,10 +70,10 @@ def hsvtorgb(H, S, V):
     return(R, G, B)
 
 
-def plot_Piper(df, 
-               unit='mg/L', 
-               figname='Piper diagram', 
-               figformat='jpg'):
+def plot(df, 
+         unit='mg/L', 
+         figname='Color coded Piper diagram', 
+         figformat='jpg'):
     """Plot the Piper diagram.
     
     Parameters
@@ -101,7 +101,8 @@ def plot_Piper(df,
     References
     ----------
     .. [1] Peeters, Luk. 2014.
-           A Background Color Scheme for Piper Plots to Spatially Visualize Hydrochemical Patterns
+           A Background Color Scheme for Piper Plots to Spatially Visualize 
+           Hydrochemical Patterns
            Groundwater 52(1).
            https://doi.org/10.1111/gwat.12118
     """
@@ -121,8 +122,9 @@ def plot_Piper(df,
         Convert the unit if needed.""")
         
     # Basic shape of piper plot
+    # -------------------------------------------------------------------------
     # Define the offset between the diamond and traingle
-    alphalevel=1.0
+    alphalevel = 1.0
     offset = 0.10 
     offsety = offset * np.tan(np.pi/3)
     h = 0.5 * np.tan(np.pi/3)
@@ -291,33 +293,33 @@ def plot_Piper(df,
     
     # create empty grids to interpolate to
     x0 = 0.5
-    y0 = x0 * np.tan( np.pi/6 )    
-    X  = np.reshape( np.repeat( np.linspace(0, 2 + 2*offset, 1000), 1000 ), (1000,1000), 'F' )
-    Y  = np.reshape( np.repeat( np.linspace(0, 2*h + offsety ,1000), 1000 ), (1000,1000), 'C' )
-    H  = np.nan * np.zeros_like( X )
-    S  = np.nan * np.zeros_like( X ) 
-    V  = np.nan * np.ones_like( X )
-    A  = np.nan * np.ones_like( X )
+    y0 = x0 * np.tan(np.pi / 6)    
+    X  = np.reshape(np.repeat(np.linspace(0, 2 + 2*offset, 1000), 1000 ), (1000, 1000), 'F' )
+    Y  = np.reshape(np.repeat(np.linspace(0, 2*h + offsety, 1000), 1000 ), (1000, 1000), 'C' )
+    H  = np.nan * np.zeros_like(X)
+    S  = np.nan * np.zeros_like(X) 
+    V  = np.nan * np.ones_like(X)
+    A  = np.nan * np.ones_like(X)
     # create masks for cation, anion triangle and upper and lower diamond
-    ind_cat = np.logical_or( np.logical_and( X<0.5, Y<2*h*X ),
-                             np.logical_and( X>0.5, Y<(2*h*(1-X) ) ) )
-    ind_an  = np.logical_or( np.logical_and( X<1.5+(2*offset), Y<2*h*(X-1-2*offset) ),
-                             np.logical_and( X>1.5+(2*offset), Y<(2*h*(1-(X-1-2*offset)) ) ) )
-    ind_ld  = np.logical_and( np.logical_or( np.logical_and( X<1.0+offset, Y > -2*h*X + 2*h*(1 + 2*offset) ),
-                                             np.logical_and( X>1.0+offset, Y >  2*h*X - 2*h ) ),
-                              Y < h+offsety )
-    ind_ud  = np.logical_and( np.logical_or( np.logical_and( X<1.0+offset, Y <   2*h*X ),
-                                             np.logical_and( X>1.0+offset, Y <  -2*h*X + 4*h*(1+offset) ) ),
-                              Y > h+offsety )
-    ind_d   = np.logical_or( ind_ld==1, ind_ud==1 )
+    ind_cat = np.logical_or(np.logical_and(X<0.5, Y<2*h*X),
+                            np.logical_and(X>0.5, Y<(2*h*(1-X))))
+    ind_an  = np.logical_or(np.logical_and(X<1.5+(2*offset), Y<2*h*(X-1-2*offset)),
+                            np.logical_and(X>1.5+(2*offset), Y<(2*h*(1-(X-1-2*offset)))))
+    ind_ld  = np.logical_and(np.logical_or(np.logical_and(X<1.0+offset, Y>-2*h*X + 2*h*(1 + 2*offset)),
+                                            np.logical_and(X>1.0+offset, Y>2*h*X - 2*h)),
+                              Y < h+offsety)
+    ind_ud  = np.logical_and(np.logical_or(np.logical_and( X<1.0+offset, Y <   2*h*X),
+                                            np.logical_and( X>1.0+offset, Y <  -2*h*X + 4*h*(1+offset))),
+                             Y > h+offsety)
+    ind_d   = np.logical_or(ind_ld==1, ind_ud==1)
     
     # Hue: convert x,y to polar coordinates 
     # (angle between 0,0 to x0,y0 and x,y to x0,y0)
-    H[ ind_cat ] = np.pi + np.arctan2( Y[ind_cat]-y0, X[ind_cat]-x0 )
-    H[ ind_cat ] = np.mod( H[ind_cat]-np.pi/6, 2*np.pi )
-    H[ ind_an ]  = np.pi + np.arctan2( Y[ind_an]-y0, X[ind_an]- ( x0+1+(2*offset) ) )
-    H[ ind_an ]  = np.mod( H[ind_an]-np.pi/6, 2*np.pi )
-    H[ ind_d ]   = np.pi + np.arctan2( Y[ind_d]-(h+offsety), X[ind_d]-(1+offset) )
+    H[ ind_cat ] = np.pi + np.arctan2(Y[ind_cat]-y0, X[ind_cat]-x0)
+    H[ ind_cat ] = np.mod(H[ind_cat]-np.pi/6, 2*np.pi)
+    H[ ind_an ]  = np.pi + np.arctan2(Y[ind_an]-y0, X[ind_an]- (x0+1+(2*offset)))
+    H[ ind_an ]  = np.mod(H[ind_an]-np.pi/6, 2*np.pi)
+    H[ ind_d ]   = np.pi + np.arctan2(Y[ind_d]-(h+offsety), X[ind_d]-(1+offset))
     # Saturation: 1 at edge of triangle, 0 in the centre,
     # Clough Tocher interpolation, square root to reduce central white region
     xy_cat = np.array( [ [0.0,0.0],
@@ -351,13 +353,13 @@ def plot_Piper(df,
     A[ind_an ] = 1.0
     A[ind_d  ] = 1.0
     # convert HSV to RGB
-    R,G,B = hsvtorgb( H, S**0.5, V )
-    RGBA = np.dstack( (R,G,B,A) )
+    R, G, B = hsvtorgb(H, S**0.5, V)
+    RGBA = np.dstack((R, G, B, A))
     # visualise
     plt.imshow( RGBA, 
                 origin='lower',
                 aspect=1.0,
-                extent=(0,2+2*offset,0,2*h+offsety) )
+                extent=(0,2+2*offset,0,2*h+offsety))
     # calculate RGB triples for data points
     # hue
     hcat = np.pi + np.arctan2( cat_y-y0, cat_x-x0 )
@@ -366,19 +368,40 @@ def plot_Piper(df,
     han  = np.mod( han-np.pi/6, 2*np.pi )
     hd   = np.pi + np.arctan2( d_y-(h+offsety), d_x-(1+offset) )
     # saturation
-    scat = s_cat.__call__( cat_x, cat_y)**0.5
-    san  = s_an.__call__(  an_x,  an_y)**0.5
-    sd   = s_d.__call__(   d_x,   d_y)**0.5
+    scat = s_cat.__call__(cat_x, cat_y)**0.5
+    san  = s_an.__call__(an_x,  an_y)**0.5
+    sd   = s_d.__call__(d_x,   d_y)**0.5
     # value
     v = np.ones_like( hd )
     # rgb
-    cat = np.vstack( (hsvtorgb( hcat, scat, v))).T
-    an  = np.vstack( (hsvtorgb(  han,  san, v))).T
-    d   = np.vstack( (hsvtorgb(   hd,   sd, v))).T
+    cat = np.vstack((hsvtorgb(hcat, scat, v))).T
+    an  = np.vstack((hsvtorgb(han, san, v))).T
+    d   = np.vstack((hsvtorgb(hd, sd, v))).T
     
     # Save the figure
     plt.savefig(figname + '.' + figformat, format=figformat, 
                 bbox_inches='tight', dpi=300)
         
-        
     return(dict(cat = cat, an=an, diamond=d))
+
+if __name__ == '__main__':
+    data = {'Sample' : ['sample1', 'sample2', 'sample3', 'sample4', 'sample5', 'sample5'],
+            'Label'  : ['C1', 'C2', 'C2', 'C3', 'C4', 'C4'],
+            'Color'  : ['red', 'blue', 'blue', 'yellow', 'yellow', 'green'],
+            'Marker' : ['o', 'o', 'o', 'o', 'o', 'o'],
+            'Size'   : [30, 30, 30, 30, 30, 30],
+            'Alpha'  : [0.6, 0.6, 0.6, 0.6, 0.6, 0.6],
+            'pH'     : [7.78, 7.78, 7.85, 7.61, 7.45, 7.45],
+            'Ca'     : [205.2, 214.5, 268.7, 215.8, 227.4, 221.8],
+            'Mg'     : [63.77, 66.67, 58.9, 65.57, 69.86, 67.97],
+            'Na'     : [21.36, 22.55, 25.76, 23.45, 32.63, 36.53],
+            'K'      : [1.32, 2.14, 3.78, 2.64, 1.52, 4.24],
+            'HCO3'   : [584.5, 584.5, 571.7, 557.1, 426.2, 484.1],
+            'CO3'    : [0, 0, 0, 0, 0, 0],
+            'Cl'     : [55.89, 56.09, 42.53, 65.27, 63.77, 63.28],
+            'SO4'    : [308.4, 310.4, 521, 359.2, 448.1, 449.1],
+            'NO3'    : [15.64, 14.78, 12.67, 16.2, 17.81, 14.51],
+            'TDS'    : [1258.6, 1274.2, 1507, 1307, 1289.3, 1344.1],
+            }
+    df = pd.DataFrame(data)
+    rgb = plot(df, unit='mg/L', figname='color coded Piper diagram', figformat='jpg')

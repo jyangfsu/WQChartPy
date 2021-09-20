@@ -4,17 +4,18 @@ Created on Thu Sep 16 11:36:50 2021
 
 @author: Jing
 """
+# Import modules
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-import matplotlib as mpl
 
 from .ions import ions_WEIGHT, ions_CHARGE
 
-def plot_Chadha(df, 
-                unit='mg/L', 
-                figname='Chadha diagram', 
-                figformat='jpg'):
+# Define the Chadha plotting function
+def plot(df, 
+         unit='mg/L', 
+         figname='Chadha diagram', 
+         figformat='jpg'):
     """Plot the Chadha diagram.
     
     Parameters
@@ -27,7 +28,6 @@ def plot_Chadha(df,
         A path or file name when saving the figure.
     figformat : class:`string`
         The file format, e.g. 'png', 'pdf', 'svg'
-        
         
     References
     ----------
@@ -52,9 +52,6 @@ def plot_Chadha(df,
     # Change default settings for figures
     # -------------------------------------------------------------------------
     plt.style.use('default')
-    plt.rcParams['font.family'] = 'serif'
-    plt.rcParams['font.serif'] = 'Ubuntu'
-    plt.rcParams['font.monospace'] = 'Ubuntu Mono'
     plt.rcParams['font.size'] = 10
     plt.rcParams['axes.labelsize'] = 10
     plt.rcParams['axes.labelweight'] = 'bold'
@@ -67,9 +64,9 @@ def plot_Chadha(df,
     # Plot background
     # -------------------------------------------------------------------------
     xmin = -100
-    xmax = 100
+    xmax = +100
     ymin = -100
-    ymax = 100
+    ymax = +100
     
     plt.figure(figsize=(8, 8))
     ax = plt.subplot(111)
@@ -165,14 +162,38 @@ def plot_Chadha(df,
                        label=TmpLabel, 
                        edgecolors='black') 
         except(ValueError):
-                pass
+            pass
             
     # Creat the legend
     ax.legend(bbox_to_anchor=(0.075, 0.95), markerscale=1, frameon=False, 
               labelspacing=0.25, handletextpad=0.25)
     
     # Save the figure
+    
     plt.savefig(figname + '.' + figformat, format=figformat, 
                 bbox_inches='tight', dpi=300)
     
     return
+
+if __name__ == '__main__':
+    data = {'Sample' : ['sample1', 'sample2', 'sample3', 'sample4', 'sample5', 'sample5'],
+            'Label'  : ['C1', 'C2', 'C2', 'C3', 'C4', 'C4'],
+            'Color'  : ['red', 'blue', 'blue', 'yellow', 'yellow', 'green'],
+            'Marker' : ['o', 'o', 'o', 'o', 'o', 'o'],
+            'Size'   : [30, 30, 30, 30, 30, 30],
+            'Alpha'  : [0.6, 0.6, 0.6, 0.6, 0.6, 0.6],
+            'pH'     : [7.78, 7.78, 7.85, 7.61, 7.45, 7.45],
+            'Ca'     : [205.2, 214.5, 268.7, 215.8, 227.4, 221.8],
+            'Mg'     : [63.77, 66.67, 58.9, 65.57, 69.86, 67.97],
+            'Na'     : [21.36, 22.55, 25.76, 23.45, 32.63, 36.53],
+            'K'      : [1.32, 2.14, 3.78, 2.64, 1.52, 4.24],
+            'HCO3'   : [584.5, 584.5, 571.7, 557.1, 426.2, 484.1],
+            'CO3'    : [0, 0, 0, 0, 0, 0],
+            'Cl'     : [55.89, 56.09, 42.53, 65.27, 63.77, 63.28],
+            'SO4'    : [308.4, 310.4, 521, 359.2, 448.1, 449.1],
+            'NO3'    : [15.64, 14.78, 12.67, 16.2, 17.81, 14.51],
+            'TDS'    : [1258.6, 1274.2, 1507, 1307, 1289.3, 1344.1],
+            }
+    df = pd.DataFrame(data)
+    plot(df, unit='mg/L', figname='Chadha diagram', figformat='jpg')
+    
