@@ -56,7 +56,7 @@ Another way is to manually install WQChartPy with `setup.py`. Preliminary steps 
     
 ## Getting started with the package
 
-We recommend to start by executing the [workflow](https://github.com/jyangfsu/WQChartPy/examples/example1.ipynb)  provided in the examples folder. 
+We recommend to start by executing the [workflow](https://github.com/jyangfsu/WQChartPy/blob/main/examples/example1.ipynb)  provided in the examples folder. 
 
 ## License
 
