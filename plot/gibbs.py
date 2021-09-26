@@ -260,8 +260,8 @@ def plot(df,
         except(ValueError):
                 pass
     
-    ax2.set_xlim(0,1)
-    ax2.set_ylim(1,60000)
+    ax2.set_xlim(0, 1)
+    ax2.set_ylim(1, 45000)
     
     minorticks_on()
     tick_params(which='major', direction='in', length=4, width=1.25)
@@ -294,6 +294,9 @@ def plot(df,
     ax2.legend(loc='upper left', markerscale=1, frameon=False, 
                labelspacing=0.25, handletextpad=0.25)
     
+    # Display the info
+    print("Gibbs plot created. Saving it now...\n")
+    
     # Save the figure
     plt.savefig(figname + '.' + figformat, format=figformat, 
                 bbox_inches='tight', dpi=300)
@@ -301,26 +304,27 @@ def plot(df,
     return
 
 if __name__ == '__main__':
-   data = {'Sample' : ['sample1', 'sample2', 'sample3', 'sample4', 'sample5', 'sample5'],
-           'Label'  : ['C1', 'C2', 'C2', 'C3', 'C4', 'C4'],
-           'Color'  : ['red', 'blue', 'blue', 'yellow', 'yellow', 'green'],
-           'Marker' : ['o', 'o', 'o', 'o', 'o', 'o'],
-           'Size'   : [30, 30, 30, 30, 30, 30],
-           'Alpha'  : [0.6, 0.6, 0.6, 0.6, 0.6, 0.6],
-           'pH'     : [7.78, 7.78, 7.85, 7.61, 7.45, 7.45],
-           'Ca'     : [205.2, 214.5, 268.7, 215.8, 227.4, 221.8],
-           'Mg'     : [63.77, 66.67, 58.9, 65.57, 69.86, 67.97],
-           'Na'     : [21.36, 22.55, 25.76, 23.45, 32.63, 36.53],
-           'K'      : [1.32, 2.14, 3.78, 2.64, 1.52, 4.24],
-           'HCO3'   : [584.5, 584.5, 571.7, 557.1, 426.2, 484.1],
-           'CO3'    : [0, 0, 0, 0, 0, 0],
-           'Cl'     : [55.89, 56.09, 42.53, 65.27, 63.77, 63.28],
-           'SO4'    : [308.4, 310.4, 521, 359.2, 448.1, 449.1],
-           'NO3'    : [15.64, 14.78, 12.67, 16.2, 17.81, 14.51],
-           'TDS'    : [1258.6, 1274.2, 1507, 1307, 1289.3, 1344.1],
-           }
-   df = pd.DataFrame(data)
-   plot(df, unit='mg/L', figname='Gibbs diagram', figformat='jpg')
+    # Example data
+    data = {'Sample' : ['sample1', 'sample2', 'sample3', 'sample4', 'sample5', 'sample6'],
+            'Label'  : ['C1', 'C2', 'C2', 'C3', 'C3', 'C1'],
+            'Color'  : ['red', 'green', 'green', 'blue', 'blue', 'red'],
+            'Marker' : ['o', 'o', 'o', 'o', 'o', 'o'],
+            'Size'   : [30, 30, 30, 30, 30, 30],
+            'Alpha'  : [0.6, 0.6, 0.6, 0.6, 0.6, 0.6],
+            'pH'     : [7.8, 7.6, 7.5, 7.7, 7.4, 7.1],
+            'Ca'     : [32, 46, 54, 50, 50, 134],
+            'Mg'     : [6, 11, 11, 11, 22, 21],
+            'Na'     : [28, 17, 16, 25, 25, 39],
+            'K'      : [2.8, 0.7, 2.4, 2.8, 0.5, 6.4],
+            'HCO3'   : [73, 201, 207, 244, 305, 275],
+            'CO3'    : [0, 0, 0, 0, 0, 0],
+            'Cl'     : [43, 14, 18, 18, 11, 96],
+            'SO4'    : [48, 9, 10, 9, 9, 100],
+            'TDS'    : [233, 299, 377, 360, 424, 673],
+            }
+    df = pd.DataFrame(data)
+    # df = pd.read_csv('../data/data_template.csv')
+    plot(df, unit='mg/L', figname='Gibbs diagram', figformat='jpg')
 
    
 

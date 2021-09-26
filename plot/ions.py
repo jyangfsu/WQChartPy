@@ -4,16 +4,17 @@ Created on Tue Sep 14 13:41:09 2021
 
 @author: Jing
 """
+# Weight values are taken from hanford.dat provided by PFLOTRAN 
+#   https://pflotran.org/.
 
-ions_WEIGHT = {'Ca'  : 40.078,
-               'Mg'  : 24.305,
+ions_WEIGHT = {'Ca'  : 40.0780,
+               'Mg'  : 24.3050,
                'K'   : 39.0983,
-               'Na'  : 22.989768,
+               'Na'  : 22.9898,
                'Cl'  : 35.4527,
                'SO4' : 96.0636,
                'CO3' : 60.0092,
-               'HCO3': 61.01714,
-               'NO3' : 62.0049}
+               'HCO3': 61.0171}
 
 ions_CHARGE = {'Ca'  : +2,
                'Mg'  : +2,
@@ -22,6 +23,5 @@ ions_CHARGE = {'Ca'  : +2,
                'Cl'  : -1,
                'SO4' : -2,
                'CO3' : -2,
-               'HCO3': -1,
-               'NO3' : -1}
+               'HCO3': -1,}
     

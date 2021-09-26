@@ -8,7 +8,6 @@ Created on Wed Sep 15 14:54:43 2021
 import pandas as pd
 import matplotlib.pyplot as plt
 from pylab import *
-import scipy
 
 from .ions import ions_WEIGHT, ions_CHARGE
 
@@ -42,7 +41,7 @@ def plot(df,
     # Determine if the required geochemical parameters are defined. 
     if not {'Ca', 'Mg', 'Na', 'K', 'HCO3', 'CO3', 'Cl', 'SO4'}.issubset(df.columns):
         raise RuntimeError("""
-        Gibbs diagram uses geochemical parameters Ca, Mg, Na, K, HCO3, CO3, Cl, and TDS.
+        Piper diagram uses geochemical parameters Ca, Mg, Na, K, HCO3, CO3, Cl, and SO4.
         Confirm that these parameters are provided.""")
         
     # Determine if the provided unit is allowed
@@ -148,8 +147,10 @@ def plot(df,
     ax1.set_xlim(0,100)
     ax1.set_ylim(0,100)
     ax1b.set_ylim(0,100)
-    ax1.set_xlabel('<- Ca (% meq)')
-    ax1b.set_ylabel('Mg (% meq) ->')
+    ax1.set_xlabel('$\longleftarrow$' + 'Ca (% meq)', size=12)
+    ax1b.set_ylabel('Mg (% meq)' + '$\longrightarrow$', size=12)
+    #ax1.set_xlabel('<- Ca (% meq)')
+    #ax1b.set_ylabel('Mg (% meq) ->')
     setp(ax1, yticklabels=[])
     
     # Reverse x axis:
@@ -188,8 +189,10 @@ def plot(df,
     # Set first axis limits and labels        
     ax3.set_xlim(0, 100)
     ax3.set_ylim(0, 100)
-    ax3.set_xlabel('Cl (% meq) ->')
-    ax3.set_ylabel('SO4 (% meq) ->')
+    ax3.set_xlabel('Cl (% meq)' + '$\longrightarrow$', size=12)
+    ax3.set_ylabel('SO4 (% meq)' + '$\longrightarrow$', size=12)
+    #ax3.set_xlabel('Cl (% meq) ->')
+    #ax3.set_ylabel('SO4 (% meq) ->')
     
     # CATIONS AND ANIONS COMBINED IN DIAMOND SHAPE PLOT
     # -------------------------------------------------------------------------
@@ -227,19 +230,26 @@ def plot(df,
     # Set second axis limits and labels
     ax2.set_xlim(0,100)
     ax2.set_ylim(0,100)
-    ax2.set_xlabel('Na+K (% meq) ->')
-    ax2.set_ylabel('SO4+Cl (% meq) ->')
-    ax2.set_title('<- Ca+Mg (% meq)', fontsize = 12)
-    ax2b.set_ylabel('<- CO3+HCO3 (% meq)')
-    ax2b.set_ylim(0,100)
+    ax2.set_xlabel('Na+K (% meq)' + '$\longrightarrow$', size=12)
+    ax2.set_ylabel('SO4+Cl (% meq)' + '$\longrightarrow$', size=12)
+    ax2.set_title('$\longleftarrow$' + 'Ca+Mg (% meq)', size=12, weight='bold')
+    ax2b.set_ylabel('$\longleftarrow$' + 'CO3+HCO3 (% meq)', size=12)
+    
+    #ax2.set_xlabel('Na+K (% meq) ->')
+    #ax2.set_ylabel('SO4+Cl (% meq) ->')
+    #ax2.set_title('<- Ca+Mg (% meq)', fontsize = 12)
+    #ax2b.set_ylabel('<- CO3+HCO3 (% meq)')
+    #ax2b.set_ylim(0,100)
     
     # Reverse 2nd y axis:
     ax2b.set_ylim(ax2b.get_ylim()[::-1])
-    print("Piper plot created...\n")
     
     # adjust position of subplots
     plt.subplots_adjust(left=0.05, bottom=0.2, right=0.95, top=0.90, 
                     wspace=0.4, hspace=0.0)
+    
+    # Display the info
+    print("Rectangle Piper plot created. Saving it now...\n")
     
     # Save the figure
     plt.savefig(figname + '.' + figformat, format=figformat, 
@@ -248,26 +258,27 @@ def plot(df,
     return
 
 if __name__ == '__main__':
-    data = {'Sample' : ['sample1', 'sample2', 'sample3', 'sample4', 'sample5', 'sample5'],
-            'Label'  : ['C1', 'C2', 'C2', 'C3', 'C4', 'C4'],
-            'Color'  : ['red', 'blue', 'blue', 'yellow', 'yellow', 'green'],
+    # Example data
+    data = {'Sample' : ['sample1', 'sample2', 'sample3', 'sample4', 'sample5', 'sample6'],
+            'Label'  : ['C1', 'C2', 'C2', 'C3', 'C3', 'C1'],
+            'Color'  : ['red', 'green', 'green', 'blue', 'blue', 'red'],
             'Marker' : ['o', 'o', 'o', 'o', 'o', 'o'],
             'Size'   : [30, 30, 30, 30, 30, 30],
             'Alpha'  : [0.6, 0.6, 0.6, 0.6, 0.6, 0.6],
-            'pH'     : [7.78, 7.78, 7.85, 7.61, 7.45, 7.45],
-            'Ca'     : [205.2, 214.5, 268.7, 215.8, 227.4, 221.8],
-            'Mg'     : [63.77, 66.67, 58.9, 65.57, 69.86, 67.97],
-            'Na'     : [21.36, 22.55, 25.76, 23.45, 32.63, 36.53],
-            'K'      : [1.32, 2.14, 3.78, 2.64, 1.52, 4.24],
-            'HCO3'   : [584.5, 584.5, 571.7, 557.1, 426.2, 484.1],
+            'pH'     : [7.8, 7.6, 7.5, 7.7, 7.4, 7.1],
+            'Ca'     : [32, 46, 54, 50, 50, 134],
+            'Mg'     : [6, 11, 11, 11, 22, 21],
+            'Na'     : [28, 17, 16, 25, 25, 39],
+            'K'      : [2.8, 0.7, 2.4, 2.8, 0.5, 6.4],
+            'HCO3'   : [73, 201, 207, 244, 305, 275],
             'CO3'    : [0, 0, 0, 0, 0, 0],
-            'Cl'     : [55.89, 56.09, 42.53, 65.27, 63.77, 63.28],
-            'SO4'    : [308.4, 310.4, 521, 359.2, 448.1, 449.1],
-            'NO3'    : [15.64, 14.78, 12.67, 16.2, 17.81, 14.51],
-            'TDS'    : [1258.6, 1274.2, 1507, 1307, 1289.3, 1344.1],
+            'Cl'     : [43, 14, 18, 18, 11, 96],
+            'SO4'    : [48, 9, 10, 9, 9, 100],
+            'TDS'    : [233, 299, 377, 360, 424, 673],
             }
     df = pd.DataFrame(data)
-    plot(df, unit='mg/L', figname='rectaangle Piper diagram', figformat='jpg')
+    # df = pd.read_csv('../data/data_template.csv')
+    plot(df, unit='mg/L', figname='rectangle Piper diagram', figformat='jpg')
     
     
     
