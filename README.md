@@ -66,4 +66,4 @@ Copyright (c) 2021 Jing Yang and Ming Ye.
 
 ## Contributing to WQChartPy
 
-Users are welcome to submit bug reports, feature requests, and code contributions to this project through GitHub or mail to us at mye@fsu.edu.
+Users are welcome to submit bug reports, feature requests, and code contributions to this project through GitHub or mail to us at jingyang@cug.edu.cn or mye@fsu.edu.
