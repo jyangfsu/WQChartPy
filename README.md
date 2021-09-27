@@ -66,7 +66,7 @@ Copyright (c) 2021 Jing Yang and Ming Ye.
 
 ## How to cite
 
-Jing Yang, Honghua Liu, Tian Jiao, Ming Ye, Zhonghua Tang. 2021. Visualization of Water Geochemistry Data Using Python and WQChartPy. Submitted for publication in Groundwater.
+Jing Yang, Honghua Liu, Tian Jiao, Ming Ye*, Zhonghua Tang. 2021. Visualization of Water Geochemistry Data Using Python and WQChartPy. Submitted for publication in Groundwater.
 
 
 ## Contributing to WQChartPy
