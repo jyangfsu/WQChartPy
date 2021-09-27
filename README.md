@@ -64,6 +64,11 @@ WQChartPy is distributed under the MIT License. See the [LICENSE](https://github
 
 Copyright (c) 2021 Jing Yang and Ming Ye.
 
+## How to cite
+
+Jing Yang, Honghua Liu, Tian Jiao, Ming Ye, Zhonghua Tang. 2021. Visualization of Water Geochemistry Data Using Python and WQChartPy. Submitted for publication in Groundwater.
+
+
 ## Contributing to WQChartPy
 
 Users are welcome to submit bug reports, feature requests, and code contributions to this project through GitHub or mail to us at jingyang@cug.edu.cn or mye@fsu.edu.
