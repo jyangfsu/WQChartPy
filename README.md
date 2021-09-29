@@ -9,28 +9,27 @@ The repository file contains:
 
 ```bash
 +-- data                                         
-¦ +-- mdata_template.csv                     # Example water geochemsitry dataset
+Â¦ +-- data_template.csv                     # Example water geochemsitry dataset
 +-- examples         
-¦ +-- example1i1.pynb                        # Example workflow oillustrate how to use WQChartPy
+Â¦ +-- example1i1.pynb                        # Example workflow to illustrate how to use WQChartPy
 +-- papers
-¦ +-- Chadha-1999-A proposed ...             # Reference for Chadha diagram    
-¦ +-- ...                                    # ... 
-¦ +-- Ray-2008-Reproducing the ...           # Reference for rectangle Piper diagram    
+Â¦ +-- Chadha-1999-A proposed ...             # Reference for Chadha diagram    
+Â¦ +-- ...                                    # ... 
+Â¦ +-- Ray-2008-Reproducing the ...           # Reference for rectangle Piper diagram    
 +-- wqchartpy
-¦ +-- __init__.py                            # Common script used in the regular package  
-¦ +-- chadha.py                              # Code for generating the Chadha diagram
-¦ +-- chernoff.py                            # Code for generating Chernoff faces
-¦ +-- color_piper.py                         # Code for generating color-coded Piper diagram
-¦ +-- durvo.py                               # Code for generating Durvo diagram
-¦ +-- gaillardet.py                          # Code for generating Gaillardet diagram
-¦ +-- gibss.py                               # Code for generating Gibbs diagram
-¦ +-- hfed.py                                # Code for generating HFE-D diagram
-¦ +-- ions.py                                # Code for defining the ion weights and charges
-¦ +-- rectangle_piper.py                     # Code for generating rectangle diagram
-¦ +-- schoeller.py                           # Code for generating Schoeller diagram
-¦ +-- stiff.py                               # Code for generating Stiff diagram
-¦ +-- triangle_piper.py                      # Code for generating triangle Piper diagram
-
+Â¦ +-- __init__.py                            # Common script used in the regular package  
+Â¦ +-- chadha.py                              # Code for generating the Chadha diagram
+Â¦ +-- chernoff.py                            # Code for generating Chernoff faces
+Â¦ +-- color_piper.py                         # Code for generating color-coded Piper diagram
+Â¦ +-- durvo.py                               # Code for generating Durvo diagram
+Â¦ +-- gaillardet.py                          # Code for generating Gaillardet diagram
+Â¦ +-- gibss.py                               # Code for generating Gibbs diagram
+Â¦ +-- hfed.py                                # Code for generating HFE-D diagram
+Â¦ +-- ions.py                                # Code for defining the ion weights and charges
+Â¦ +-- rectangle_piper.py                     # Code for generating rectangle diagram
+Â¦ +-- schoeller.py                           # Code for generating Schoeller diagram
+Â¦ +-- stiff.py                               # Code for generating Stiff diagram
+Â¦ +-- triangle_piper.py                      # Code for generating triangle Piper diagram
 +-- LICENCE     
 +-- README.md         
 +-- setup.py                                 # Centre script of and installing this package
