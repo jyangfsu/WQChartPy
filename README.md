@@ -11,7 +11,7 @@ The repository contains:
 +-- data                                         
 ¦ +-- data_template.csv                      # Example water geochemsitry dataset
 +-- examples         
-¦ +-- example1i1.ipynb                        # Example workflow to illustrate how to use WQChartPy
+¦ +-- example1.ipynb                        # Example workflow to illustrate how to use WQChartPy
 +-- papers
 ¦ +-- Chadha-1999-A proposed ...             # Reference for Chadha diagram    
 ¦ +-- ...                                    # ... 
@@ -86,7 +86,9 @@ Gibbs| from wqchartpy import gibbs; gibbs.plot(df, unit, figname, figformat)
 Gaillardet| from wqchartpy import gaillardet; gaillardet.plot(df, unit, figname, figformat)
 HFE-D| from wqchartpy import hfed; hfed.plot(df, unit, figname, figformat)
 
-### At a glance
+### Triangle Piper
+![](/examples/triangle Piper diagram.jpg)
+
 
 ## License
 
