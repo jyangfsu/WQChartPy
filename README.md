@@ -87,7 +87,7 @@ Gaillardet| from wqchartpy import gaillardet; gaillardet.plot(df, unit, figname,
 HFE-D| from wqchartpy import hfed; hfed.plot(df, unit, figname, figformat)
 
 ### Triangle Piper
-<img src="/examples/triangle_Piper_diagram.png" width="400" height="400">
+<img src="/examples/triangle_Piper_diagram.png" width="400">
 
 ## License
 
