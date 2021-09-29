@@ -9,27 +9,28 @@ The repository file contains:
 
 ```bash
 +-- data                                         
-Â¦ +-- data_template.csv                     # Example water geochemsitry dataset
+¦ +-- mdata_template.csv                     # Example water geochemsitry dataset
 +-- examples         
-Â¦ +-- example1i1.pynb                        # Example workflow to illustrate how to use WQChartPy
+¦ +-- example1i1.pynb                        # Example workflow oillustrate how to use WQChartPy
 +-- papers
-Â¦ +-- Chadha-1999-A proposed ...             # Reference for Chadha diagram    
-Â¦ +-- ...                                    # ... 
-Â¦ +-- Ray-2008-Reproducing the ...           # Reference for rectangle Piper diagram    
+¦ +-- Chadha-1999-A proposed ...             # Reference for Chadha diagram    
+¦ +-- ...                                    # ... 
+¦ +-- Ray-2008-Reproducing the ...           # Reference for rectangle Piper diagram    
 +-- wqchartpy
-Â¦ +-- __init__.py                            # Common script used in the regular package  
-Â¦ +-- chadha.py                              # Code for generating the Chadha diagram
-Â¦ +-- chernoff.py                            # Code for generating Chernoff faces
-Â¦ +-- color_piper.py                         # Code for generating color-coded Piper diagram
-Â¦ +-- durvo.py                               # Code for generating Durvo diagram
-Â¦ +-- gaillardet.py                          # Code for generating Gaillardet diagram
-Â¦ +-- gibss.py                               # Code for generating Gibbs diagram
-Â¦ +-- hfed.py                                # Code for generating HFE-D diagram
-Â¦ +-- ions.py                                # Code for defining the ion weights and charges
-Â¦ +-- rectangle_piper.py                     # Code for generating rectangle diagram
-Â¦ +-- schoeller.py                           # Code for generating Schoeller diagram
-Â¦ +-- stiff.py                               # Code for generating Stiff diagram
-Â¦ +-- triangle_piper.py                      # Code for generating triangle Piper diagram
+¦ +-- __init__.py                            # Common script used in the regular package  
+¦ +-- chadha.py                              # Code for generating the Chadha diagram
+¦ +-- chernoff.py                            # Code for generating Chernoff faces
+¦ +-- color_piper.py                         # Code for generating color-coded Piper diagram
+¦ +-- durvo.py                               # Code for generating Durvo diagram
+¦ +-- gaillardet.py                          # Code for generating Gaillardet diagram
+¦ +-- gibss.py                               # Code for generating Gibbs diagram
+¦ +-- hfed.py                                # Code for generating HFE-D diagram
+¦ +-- ions.py                                # Code for defining the ion weights and charges
+¦ +-- rectangle_piper.py                     # Code for generating rectangle diagram
+¦ +-- schoeller.py                           # Code for generating Schoeller diagram
+¦ +-- stiff.py                               # Code for generating Stiff diagram
+¦ +-- triangle_piper.py                      # Code for generating triangle Piper diagram
+
 +-- LICENCE     
 +-- README.md         
 +-- setup.py                                 # Centre script of and installing this package
@@ -71,6 +72,19 @@ Another way is to manually install WQChartPy with `setup.py`. Preliminary steps 
 ## How to use
 
 We recommend to start by executing the [workflow](https://github.com/jyangfsu/WQChartPy/blob/main/examples/example1.ipynb) provided in the examples folder. 
+
+| Diagram | Basic usage
+---------|------------
+Triangle Piper| from wqchartpy import triangle_piper; triangle_piper.plot(df, unit, figname, figformat)
+Rectangle Piper| from wqchartpy import rectangle_piper; rectangle_piper.plot(df, unit, figname, figformat)
+Color-coded Piper| from wqchartpy import color_piper; color_piper.plot(df, unit, figname, figformat)
+Durov Piper| from wqchartpy import durvo; durvo.plot(df, unit, figname, figformat)
+Chadha| from wqchartpy import chada; chada.plot(df, unit, figname, figformat)
+Chernoff face| from wqchartpy import chernoff; chernoff.plot(df, unit, figname, figformat)
+Schoeller| from wqchartpy import schoeller; schoeller.plot(df, unit, figname, figformat)
+Gibbs| from wqchartpy import gibbs; gibbs.plot(df, unit, figname, figformat)
+Gaillardet| from wqchartpy import gaillardet; gaillardet.plot(df, unit, figname, figformat)
+HFE-D| from wqchartpy import hfed; hfed.plot(df, unit, figname, figformat)
 
 ## License
 
