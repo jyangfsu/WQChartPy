@@ -11,7 +11,7 @@ The repository file contains:
 +-- data                                         
 ¦ +-- data_template.csv                      # Example water geochemsitry dataset
 +-- examples         
-¦ +-- example1i1.pynb                        # Example workflow to illustrate how to use WQChartPy
+¦ +-- example1i1.ipynb                        # Example workflow to illustrate how to use WQChartPy
 +-- papers
 ¦ +-- Chadha-1999-A proposed ...             # Reference for Chadha diagram    
 ¦ +-- ...                                    # ... 
