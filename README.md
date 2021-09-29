@@ -89,7 +89,6 @@ HFE-D| from wqchartpy import hfed; hfed.plot(df, unit, figname, figformat)
 ### Triangle Piper
 ![](/examples/triangle_Piper_diagram.png)
 
-
 ## License
 
 WQChartPy is distributed under the GNU General Public License v3.0. See the [LICENSE](https://github.com/jyangfsu/WQChartPy/LICENSE) file for details.
