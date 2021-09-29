@@ -4,12 +4,12 @@
 
 DESCRIPTION = "Python Package for Visualization of Water Geochemistry Data"
 LONG_DESCRIPTION = """\
-WQChartPy is an open source python package developed for graphical diagrams 
-of water geochemistry data. Utilizing the commonly used Excel XLSX or 
-CSV (Comma Separated Value) as the input data format, WQChartPy can produce 
-twelve diagrams including not only the traditional Piper diagram, 
+WQChartPy is an open-source python package developed for graphical diagrams 
+of water geochemistry data. Utilizing the commonly used CSV
+as the input data format, WQChartPy can produce 
+eleven diagrams including not only the traditional Piper trilinear diagram, 
 Stiff diagram, Durov diagram and Schoeller diagram, but also the recently 
-proposed new diagrams such as the rectangle Piper, colored Piper and HFE-D 
+proposed new diagrams such as the rectangle Piper, color-coded Piper and HFE-D 
 that has not implemented in previous software. 
 
 This is the first release of WQChartPy. As a Python-based cross platform 
@@ -28,8 +28,8 @@ contribute.
 DISTNAME = 'wqchartpy'
 MAINTAINER = 'Jing Yang'
 MAINTAINER_EMAIL = 'jingyang@cug.edu.cn'
-LICENSE = 'BSD (3-clause)'
-VERSION = '0.1.0'
+LICENSE = 'GNU General Public License v3.0'
+VERSION = '0.1.3'
 PYTHON_REQUIRES = ">=3.7"
 
 INSTALL_REQUIRES = [
@@ -41,22 +41,24 @@ INSTALL_REQUIRES = [
 
 if __name__ == "__main__":
 
-    from setuptools import setup
+    from setuptools import setup, find_packages
 
     import sys
-    if sys.version_info[:2] < (3, 6):
-        raise RuntimeError("seaborn requires python >= 3.6.")
+    if sys.version_info[:2] < (3, 7):
+        raise RuntimeError("wqchartpy requires python >= 3.7.")
 
     setup(
         name=DISTNAME,
+        version=VERSION,
         author=MAINTAINER,
         author_email=MAINTAINER_EMAIL,
         maintainer=MAINTAINER,
         maintainer_email=MAINTAINER_EMAIL,
         description=DESCRIPTION,
         long_description=LONG_DESCRIPTION,
+        url='https://www.github.com/jyangfsu/WQChartPy',
         license=LICENSE,
-        version=VERSION,
+        packages = find_packages(),
         python_requires=PYTHON_REQUIRES,
         install_requires=INSTALL_REQUIRES,
     )
