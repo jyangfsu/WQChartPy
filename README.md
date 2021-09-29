@@ -86,9 +86,6 @@ Gibbs| from wqchartpy import gibbs; gibbs.plot(df, unit, figname, figformat)
 Gaillardet| from wqchartpy import gaillardet; gaillardet.plot(df, unit, figname, figformat)
 HFE-D| from wqchartpy import hfed; hfed.plot(df, unit, figname, figformat)
 
-### Triangle Piper
-<img src="/examples/triangle_Piper_diagram.png" width="400">
-
 ## License
 
 WQChartPy is distributed under the GNU General Public License v3.0. See the [LICENSE](https://github.com/jyangfsu/WQChartPy/LICENSE) file for details.
