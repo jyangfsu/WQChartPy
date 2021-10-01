@@ -11,7 +11,7 @@ The repository contains:
 +-- data                                         
 ¦ +-- data_template.csv                      # Example water geochemsitry dataset
 +-- examples         
-¦ +-- example1.ipynb                        # Example workflow to illustrate how to use WQChartPy
+¦ +-- example1.ipynb                         # Example workflow to illustrate how to use WQChartPy
 +-- papers
 ¦ +-- Chadha-1999-A proposed ...             # Reference for Chadha diagram    
 ¦ +-- ...                                    # ... 
@@ -112,7 +112,7 @@ HFE-D| from wqchartpy import hfed; hfed.plot(df, unit, figname, figformat)
 
 ### Chernoff face
 
-<img src="http://m.qpic.cn/psc?/V5428EvQ2PMkSA3NWIHm4Ak3hg1jM4M8/TmEUgtj9EK6.7V8ajmQrEPQnvEMYtYvp*6.SLJia0qDNUAuR*fJsG7W81Q93nVf3i0uWl5Fc1J0B9GRIt18.O3B2uERg*9RjxUuYt6708S4!/b&bo=sAX*AgAAAAABF3g!&rf=viewer_4" width="300"/>
+<img src="http://m.qpic.cn/psc?/V5428EvQ2PMkSA3NWIHm4Ak3hg1jM4M8/TmEUgtj9EK6.7V8ajmQrEPQnvEMYtYvp*6.SLJia0qDNUAuR*fJsG7W81Q93nVf3i0uWl5Fc1J0B9GRIt18.O3B2uERg*9RjxUuYt6708S4!/b&bo=sAX*AgAAAAABF3g!&rf=viewer_4" width="400"/>
 
 ### Schoeller
 
