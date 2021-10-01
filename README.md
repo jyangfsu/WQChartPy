@@ -86,9 +86,13 @@ Gibbs| from wqchartpy import gibbs; gibbs.plot(df, unit, figname, figformat)
 Gaillardet| from wqchartpy import gaillardet; gaillardet.plot(df, unit, figname, figformat)
 HFE-D| from wqchartpy import hfed; hfed.plot(df, unit, figname, figformat)
 
-Triangle Piper             |  Rectangle Piper
-:-------------------------:|:-------------------------:
-<img src="http://m.qpic.cn/psc?/V5428EvQ2PMkSA3NWIHm4Ak3hg1jM4M8/TmEUgtj9EK6.7V8ajmQrEHUT.qen6SdsDmKr7ZWH1J9WxMDphBCAB4Amp6ePSA6fGknkfdCt.4wfGW49cBfZtRIcxtmRNJAXwbJQ.u8cyI0!/b&bo=yQQ4BAAAAAADN.M!&rf=viewer_4" width="300"/>  |  <img src="http://m.qpic.cn/psc?/V5428EvQ2PMkSA3NWIHm4Ak3hg1jM4M8/TmEUgtj9EK6.7V8ajmQrEEQ*bpnYzayLQ9j326YtZl7bNKlVMVfQz.30mfFrmo1Fn2yx4yBarvIaOg4hv8Kij*m2uPcNBPHZVoAP9NlBT5Q!/b&bo=cA04BAAAAAABF3E!&rf=viewer_4http://m.qpic.cn/psc?/V5428EvQ2PMkSA3NWIHm4Ak3hg1jM4M8/TmEUgtj9EK6.7V8ajmQrEEQ*bpnYzayLQ9j326YtZl7bNKlVMVfQz.30mfFrmo1Fn2yx4yBarvIaOg4hv8Kij*m2uPcNBPHZVoAP9NlBT5Q!/b&bo=cA04BAAAAAABF3E!&rf=viewer_4" width="600"/>
+### Triangle Piper 
+
+<img src="http://m.qpic.cn/psc?/V5428EvQ2PMkSA3NWIHm4Ak3hg1jM4M8/TmEUgtj9EK6.7V8ajmQrEHUT.qen6SdsDmKr7ZWH1J9WxMDphBCAB4Amp6ePSA6fGknkfdCt.4wfGW49cBfZtRIcxtmRNJAXwbJQ.u8cyI0!/b&bo=yQQ4BAAAAAADN.M!&rf=viewer_4" width="300"/>  |  
+
+### Rectangle Piper
+
+<img src="http://m.qpic.cn/psc?/V5428EvQ2PMkSA3NWIHm4Ak3hg1jM4M8/TmEUgtj9EK6.7V8ajmQrEEQ*bpnYzayLQ9j326YtZl7bNKlVMVfQz.30mfFrmo1Fn2yx4yBarvIaOg4hv8Kij*m2uPcNBPHZVoAP9NlBT5Q!/b&bo=cA04BAAAAAABF3E!&rf=viewer_4" width="600"/>
 
 
 
