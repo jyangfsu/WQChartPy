@@ -108,15 +108,15 @@ HFE-D| from wqchartpy import hfed; hfed.plot(df, unit, figname, figformat)
 
 ### Stiff
 
-<img src="http://m.qpic.cn/psc?/V5428EvQ2PMkSA3NWIHm4Ak3hg1jM4M8/TmEUgtj9EK6.7V8ajmQrEA7GIh1gAigmhS377TXDZgGzakXYRF*LtUPfnKC*Ei4b8miBYkmWHshuUe6IwRKhQHzmkcGUw7gh.HuFjPZtpFY!/b&bo=CQR4AwAAAAABF0Y!&rf=viewer_4" width="400"/>
+<img src="http://m.qpic.cn/psc?/V5428EvQ2PMkSA3NWIHm4Ak3hg1jM4M8/TmEUgtj9EK6.7V8ajmQrEA7GIh1gAigmhS377TXDZgGzakXYRF*LtUPfnKC*Ei4b8miBYkmWHshuUe6IwRKhQHzmkcGUw7gh.HuFjPZtpFY!/b&bo=CQR4AwAAAAABF0Y!&rf=viewer_4" width="300"/>
 
 ### Chernoff face
 
-<img src="http://m.qpic.cn/psc?/V5428EvQ2PMkSA3NWIHm4Ak3hg1jM4M8/TmEUgtj9EK6.7V8ajmQrEPQnvEMYtYvp*6.SLJia0qDNUAuR*fJsG7W81Q93nVf3i0uWl5Fc1J0B9GRIt18.O3B2uERg*9RjxUuYt6708S4!/b&bo=sAX*AgAAAAABF3g!&rf=viewer_4" width="400"/>
+<img src="http://m.qpic.cn/psc?/V5428EvQ2PMkSA3NWIHm4Ak3hg1jM4M8/TmEUgtj9EK6.7V8ajmQrEPQnvEMYtYvp*6.SLJia0qDNUAuR*fJsG7W81Q93nVf3i0uWl5Fc1J0B9GRIt18.O3B2uERg*9RjxUuYt6708S4!/b&bo=sAX*AgAAAAABF3g!&rf=viewer_4" width="300"/>
 
 ### Schoeller
 
-<img src="http://m.qpic.cn/psc?/V5428EvQ2PMkSA3NWIHm4Ak3hg1jM4M8/TmEUgtj9EK6.7V8ajmQrEHDI2zP9xykKJE8B35OPu0t*E5BY5U442s0xKWw0DQthegx.b2vFoR38E83GSD0DA9*dKTWeUE682wfioAvwtlw!/b&bo=rQY1BAAAAAABF6o!&rf=viewer_4" width="400"/>
+<img src="http://m.qpic.cn/psc?/V5428EvQ2PMkSA3NWIHm4Ak3hg1jM4M8/TmEUgtj9EK6.7V8ajmQrEHDI2zP9xykKJE8B35OPu0t*E5BY5U442s0xKWw0DQthegx.b2vFoR38E83GSD0DA9*dKTWeUE682wfioAvwtlw!/b&bo=rQY1BAAAAAABF6o!&rf=viewer_4" width="300"/>
 
 ### Gibbs
 
