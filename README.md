@@ -94,7 +94,41 @@ HFE-D| from wqchartpy import hfed; hfed.plot(df, unit, figname, figformat)
 
 <img src="http://m.qpic.cn/psc?/V5428EvQ2PMkSA3NWIHm4Ak3hg1jM4M8/TmEUgtj9EK6.7V8ajmQrEEQ*bpnYzayLQ9j326YtZl7bNKlVMVfQz.30mfFrmo1Fn2yx4yBarvIaOg4hv8Kij*m2uPcNBPHZVoAP9NlBT5Q!/b&bo=cA04BAAAAAABF3E!&rf=viewer_4" width="600"/>
 
+### Color-coded Piper
 
+<img src="http://m.qpic.cn/psc?/V5428EvQ2PMkSA3NWIHm4Ak3hg1jM4M8/TmEUgtj9EK6.7V8ajmQrEHneC7d0qa6QUS29Ms0ypPGYOUfC8lCOYeHRPJ0ylwdxAcKWKEM9rpCxwdlhRScHqz*PI0q7U7fw1ownlDtv4.s!/b&bo=kQQ4BAAAAAABF5k!&rf=viewer_4" width="400"/>
+
+### Durvo
+
+<img src="http://m.qpic.cn/psc?/V5428EvQ2PMkSA3NWIHm4Ak3hg1jM4M8/TmEUgtj9EK6.7V8ajmQrELzGUaNpt5Oc0qLKLxWJgMLzM.WSa4JCmnt6jdaTKA65nccrcw1krP7LOgmKpBDqvJN6X8jVRBp.tPvhVyM72Uc!/b&bo=3AU4BAAAAAABF9U!&rf=viewer_4" width="600"/>
+
+### Chadha
+
+<img src="http://m.qpic.cn/psc?/V5428EvQ2PMkSA3NWIHm4Ak3hg1jM4M8/TmEUgtj9EK6.7V8ajmQrEObCpOHFbGmBBxvfIx*wxDEGWaYX1FytI3QD9EKwoc4LjnL8I1xcNQZIS9tfuNRLUYNeFBpePRc7wTPaFcP5hBg!/b&bo=YwQ4BAAAAAABF2s!&rf=viewer_4" width="400"/>
+
+### Stiff
+
+<img src="http://m.qpic.cn/psc?/V5428EvQ2PMkSA3NWIHm4Ak3hg1jM4M8/TmEUgtj9EK6.7V8ajmQrEA7GIh1gAigmhS377TXDZgGzakXYRF*LtUPfnKC*Ei4b8miBYkmWHshuUe6IwRKhQHzmkcGUw7gh.HuFjPZtpFY!/b&bo=CQR4AwAAAAABF0Y!&rf=viewer_4" width="400"/>
+
+### Chernoff face
+
+<img src="http://m.qpic.cn/psc?/V5428EvQ2PMkSA3NWIHm4Ak3hg1jM4M8/TmEUgtj9EK6.7V8ajmQrEPQnvEMYtYvp*6.SLJia0qDNUAuR*fJsG7W81Q93nVf3i0uWl5Fc1J0B9GRIt18.O3B2uERg*9RjxUuYt6708S4!/b&bo=sAX*AgAAAAABF3g!&rf=viewer_4" width="400"/>
+
+### Schoeller
+
+<img src="http://m.qpic.cn/psc?/V5428EvQ2PMkSA3NWIHm4Ak3hg1jM4M8/TmEUgtj9EK6.7V8ajmQrEHDI2zP9xykKJE8B35OPu0t*E5BY5U442s0xKWw0DQthegx.b2vFoR38E83GSD0DA9*dKTWeUE682wfioAvwtlw!/b&bo=rQY1BAAAAAABF6o!&rf=viewer_4" width="400"/>
+
+### Gibbs
+
+<img src="http://m.qpic.cn/psc?/V5428EvQ2PMkSA3NWIHm4Ak3hg1jM4M8/TmEUgtj9EK6.7V8ajmQrEOgyK8NC1n6NDKj3MDe4ZlelftwUYpZzp9mvT2bHfKK6Q0D4MG3lunZr1pGIn0JzB7aH2ibjwHibYTyH3FaZ6Bs!/b&bo=KQY4BAAAAAABFyM!&rf=viewer_4" width="600"/>
+
+### Gaillardet
+
+<img src="http://m.qpic.cn/psc?/V5428EvQ2PMkSA3NWIHm4Ak3hg1jM4M8/TmEUgtj9EK6.7V8ajmQrECWuBgqtckt0E5Vdw0Fg4KG1A0z0b6JG92wBVeKdj4hajDD*j1mMN2WQa03QT0x8SE4aPyd17q*mowLeHr8dqAI!/b&bo=Pgo4BAAAAAABFzg!&rf=viewer_4" width="600"/>
+
+### HFE-D
+
+<img src="http://m.qpic.cn/psc?/V5428EvQ2PMkSA3NWIHm4Ak3hg1jM4M8/TmEUgtj9EK6.7V8ajmQrEF95xIluTfjVHciJSrMVeUAKx62rti54ZRFl6RGBYir7JXHcuI5X0BZCNsm2CKfaCZdzcjicCARYlBmKKBIZRE4!/b&bo=qAU4BAAAAAABF6E!&rf=viewer_4" width="400"/>
 
 ## License
 
