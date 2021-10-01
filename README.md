@@ -128,7 +128,7 @@ HFE-D| from wqchartpy import hfed; hfed.plot(df, unit, figname, figformat)
 
 ### HFE-D
 
-<img src="http://m.qpic.cn/psc?/V5428EvQ2PMkSA3NWIHm4Ak3hg1jM4M8/TmEUgtj9EK6.7V8ajmQrEF95xIluTfjVHciJSrMVeUAKx62rti54ZRFl6RGBYir7JXHcuI5X0BZCNsm2CKfaCZdzcjicCARYlBmKKBIZRE4!/b&bo=qAU4BAAAAAABF6E!&rf=viewer_4" width="400"/>
+<img src="http://m.qpic.cn/psc?/V5428EvQ2PMkSA3NWIHm4Ak3hg1jM4M8/TmEUgtj9EK6.7V8ajmQrEF95xIluTfjVHciJSrMVeUAKx62rti54ZRFl6RGBYir7JXHcuI5X0BZCNsm2CKfaCZdzcjicCARYlBmKKBIZRE4!/b&bo=qAU4BAAAAAABF6E!&rf=viewer_4" width="600"/>
 
 ## License
 
