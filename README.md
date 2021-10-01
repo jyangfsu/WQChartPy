@@ -86,6 +86,8 @@ Gibbs| from wqchartpy import gibbs; gibbs.plot(df, unit, figname, figformat)
 Gaillardet| from wqchartpy import gaillardet; gaillardet.plot(df, unit, figname, figformat)
 HFE-D| from wqchartpy import hfed; hfed.plot(df, unit, figname, figformat)
 
+<img src="http://m.qpic.cn/psc?/V5428EvQ2PMkSA3NWIHm4Ak3hg1jM4M8/TmEUgtj9EK6.7V8ajmQrEHUT.qen6SdsDmKr7ZWH1J9WxMDphBCAB4Amp6ePSA6fGknkfdCt.4wfGW49cBfZtRIcxtmRNJAXwbJQ.u8cyI0!/b&bo=yQQ4BAAAAAADN.M!&rf=viewer_4" width="300"/>
+
 ## License
 
 WQChartPy is distributed under the GNU General Public License v3.0. See the [LICENSE](https://github.com/jyangfsu/WQChartPy/LICENSE) file for details.
