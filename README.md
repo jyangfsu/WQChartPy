@@ -136,4 +136,4 @@ WQChartPy is distributed under the GNU General Public License v3.0. See the [LIC
 
 ## Contributing to WQChartPy
 
-Users are welcome to submit bug reports, feature requests, and code contributions to this project through GitHub or mail to us at jingyang@cug.edu.cn or mye@fsu.edu.
+Users are welcome to submit bug reports, feature requests, and code contributions to this project through GitHub or mail to us.
