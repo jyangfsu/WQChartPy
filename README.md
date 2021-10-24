@@ -96,7 +96,7 @@ HFE-D| from wqchartpy import hfed; hfed.plot(df, unit, figname, figformat)
 
 ### Color-coded Piper
 
-<img src="http://m.qpic.cn/psc?/V5428EvQ2PMkSA3NWIHm4Ak3hg1jM4M8/TmEUgtj9EK6.7V8ajmQrEHneC7d0qa6QUS29Ms0ypPGYOUfC8lCOYeHRPJ0ylwdxAcKWKEM9rpCxwdlhRScHqz*PI0q7U7fw1ownlDtv4.s!/b&bo=kQQ4BAAAAAABF5k!&rf=viewer_4" width="400"/>
+<img src="http://m.qpic.cn/psc?/V5428EvQ2PMkSA3NWIHm4Ak3hg1jM4M8/TmEUgtj9EK6.7V8ajmQrEDtPXtIUpL03F3TMGdX*8q0r1LHrDMwnzrJsO7Sqgf6UJLN49xeak**q9kFK2SX9HW8npJ.pZGV5RFAKh88h2Ck!/b&bo=5QKrAgAAAAABF34!&rf=viewer_4" width="400"/>
 
 ### Durvo
 
@@ -104,7 +104,7 @@ HFE-D| from wqchartpy import hfed; hfed.plot(df, unit, figname, figformat)
 
 ### Chadha
 
-<img src="http://m.qpic.cn/psc?/V5428EvQ2PMkSA3NWIHm4Ak3hg1jM4M8/TmEUgtj9EK6.7V8ajmQrEObCpOHFbGmBBxvfIx*wxDEGWaYX1FytI3QD9EKwoc4LjnL8I1xcNQZIS9tfuNRLUYNeFBpePRc7wTPaFcP5hBg!/b&bo=YwQ4BAAAAAABF2s!&rf=viewer_4" width="400"/>
+<img src="http://m.qpic.cn/psc?/V5428EvQ2PMkSA3NWIHm4Ak3hg1jM4M8/TmEUgtj9EK6.7V8ajmQrEDSa1igiB7QOKMRTqlOVZ7MJapRy*IwdFN0i4lw43CJMfRmsIXJFUgSa4SH72bPXDQ50KbHhwYj3BTKCiEI*Qws!/b&bo=gAJ8AgAAAAADF84!&rf=viewer_4" width="400"/>
 
 ### Stiff
 
@@ -136,4 +136,4 @@ WQChartPy is distributed under the GNU General Public License v3.0. See the [LIC
 
 ## Contributing to WQChartPy
 
-Users are welcome to submit bug reports, feature requests, and code contributions to this project through GitHub or mail to us at jingyang@cug.edu.cn or mye@fsu.edu.
+Users are welcome to submit bug reports, feature requests, and code contributions to this project through GitHub or mail to us.

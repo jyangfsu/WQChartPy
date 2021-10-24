@@ -48,7 +48,7 @@ def plot(df,
         raise RuntimeError("""
         Currently only mg/L is supported.
         Convert the unit if needed.""")
-        
+    '''
     # Seawater concentrations from Turekian, K.K. ,1968.- Oceans , Prentice Hall
     CONC_SWAWATER = {'Ca': 411,
                      'Mg': 1290,
@@ -57,7 +57,16 @@ def plot(df,
                      'HCO3': 142,
                      'SO4': 2712,
                      'Cl': 19400}
-        
+    '''
+    # Seawater concentrations from Table 2.3 of Appelo and Postma, 2005.- Geochemistry, Groundwater and Pollution
+    CONC_SWAWATER = {'Ca': 429,      # 10.7  mmol/L
+                     'Mg': 1339,     # 55.1  mmol/L
+                     'Na': 11150,    # 485.0 mmol/L
+                     'K': 414,       # 10.6  mmol/L
+                     'HCO3': 146,    # 2.4   mmol/L 
+                     'SO4': 2815,    # 29.3  mmol/L
+                     'Cl': 20066}    # 566   mmol/L
+
     # Figure settings
     fig = plt.figure(figsize=(10, 10))
     

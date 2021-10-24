@@ -165,7 +165,7 @@ def plot(df,
             pass
             
     # Creat the legend
-    ax.legend(bbox_to_anchor=(0.075, 0.95), markerscale=1, frameon=False, 
+    ax.legend(bbox_to_anchor=(0.085, 0.95), markerscale=1, frameon=False, 
               labelspacing=0.25, handletextpad=0.25)
     
     # Display the info
