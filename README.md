@@ -17,6 +17,7 @@ The repository contains:
 ¦ +-- ...                                    # ... 
 ¦ +-- Ray-2008-Reproducing the ...           # Reference for rectangle Piper diagram    
 +-- wqchartpy
+¦ +-- BivariateColourScheme.npy              # NumPy ndarray object used to fill the background color
 ¦ +-- __init__.py                            # Common script used in the regular package  
 ¦ +-- chadha.py                              # Code for generating the Chadha diagram
 ¦ +-- chernoff.py                            # Code for generating Chernoff faces
@@ -88,47 +89,47 @@ HFE-D| from wqchartpy import hfed; hfed.plot(df, unit, figname, figformat)
 
 ### Triangle Piper 
 
-<img src="http://m.qpic.cn/psc?/V5428EvQ2PMkSA3NWIHm4Ak3hg1jM4M8/TmEUgtj9EK6.7V8ajmQrEHUT.qen6SdsDmKr7ZWH1J9WxMDphBCAB4Amp6ePSA6fGknkfdCt.4wfGW49cBfZtRIcxtmRNJAXwbJQ.u8cyI0!/b&bo=yQQ4BAAAAAADN.M!&rf=viewer_4" width="400"/>  
+<img src="http://m.qpic.cn/psc?/V5428EvQ2PMkSA3NWIHm4Ak3hg45PLib/TmEUgtj9EK6.7V8ajmQrECmTiF9WFCBK*FqbaC1Gc9x8p0qnA.IgiMoIYsqJbpqLbhokrRynpBx.b4LtRhNGuzcMrO4vXEwgLmeRZte6ItI!/b&bo=yQQ4BAAAAAABF8E!&rf=viewer_4" width="400"/>  
 
 ### Rectangle Piper
 
-<img src="http://m.qpic.cn/psc?/V5428EvQ2PMkSA3NWIHm4Ak3hg1jM4M8/TmEUgtj9EK6.7V8ajmQrEEQ*bpnYzayLQ9j326YtZl7bNKlVMVfQz.30mfFrmo1Fn2yx4yBarvIaOg4hv8Kij*m2uPcNBPHZVoAP9NlBT5Q!/b&bo=cA04BAAAAAABF3E!&rf=viewer_4" width="600"/>
+<img src="http://m.qpic.cn/psc?/V5428EvQ2PMkSA3NWIHm4Ak3hg45PLib/TmEUgtj9EK6.7V8ajmQrED65VNtqduHH9ZXaYXUt2kXuTCyMjLOJtYlPYWgJsJCcDaRJawc70iUGAuHxzIbF92HzirvHzdOOgGhXYIgYRGM!/b&bo=TA04BAAAAAABF00!&rf=viewer_4" width="600"/>
 
 ### Color-coded Piper
 
-<img src="http://m.qpic.cn/psc?/V5428EvQ2PMkSA3NWIHm4Ak3hg1jM4M8/TmEUgtj9EK6.7V8ajmQrEDtPXtIUpL03F3TMGdX*8q0r1LHrDMwnzrJsO7Sqgf6UJLN49xeak**q9kFK2SX9HW8npJ.pZGV5RFAKh88h2Ck!/b&bo=5QKrAgAAAAABF34!&rf=viewer_4" width="400"/>
+<img src="http://m.qpic.cn/psc?/V5428EvQ2PMkSA3NWIHm4Ak3hg45PLib/TmEUgtj9EK6.7V8ajmQrEH5ZUa7NHBJfUicR19oK1LdR.4BlQkIGQK5ZStLnkw0hw2dZ3HZ0RMTh6MUXtCT8lS9iKyNVp*yqKMdenah5Gyw!/b&bo=kQQ4BAAAAAABF5k!&rf=viewer_4" width="400"/>
 
 ### Durvo
 
-<img src="http://m.qpic.cn/psc?/V5428EvQ2PMkSA3NWIHm4Ak3hg1jM4M8/TmEUgtj9EK6.7V8ajmQrELzGUaNpt5Oc0qLKLxWJgMLzM.WSa4JCmnt6jdaTKA65nccrcw1krP7LOgmKpBDqvJN6X8jVRBp.tPvhVyM72Uc!/b&bo=3AU4BAAAAAABF9U!&rf=viewer_4" width="600"/>
-
-### Chadha
-
-<img src="http://m.qpic.cn/psc?/V5428EvQ2PMkSA3NWIHm4Ak3hg1jM4M8/TmEUgtj9EK6.7V8ajmQrEDSa1igiB7QOKMRTqlOVZ7MJapRy*IwdFN0i4lw43CJMfRmsIXJFUgSa4SH72bPXDQ50KbHhwYj3BTKCiEI*Qws!/b&bo=gAJ8AgAAAAADF84!&rf=viewer_4" width="400"/>
+<img src="http://m.qpic.cn/psc?/V5428EvQ2PMkSA3NWIHm4Ak3hg45PLib/TmEUgtj9EK6.7V8ajmQrEFxdTbgG*WQO88FndxW.Yi94JPq2olGWH40hp7aJUSUBfllLfuM1pbdQqRRxq4s4NN6vnbc2VWzTwzyvK3mKxN0!/b&bo=3AU4BAAAAAABF9U!&rf=viewer_4" width="600"/>
 
 ### Stiff
 
-<img src="http://m.qpic.cn/psc?/V5428EvQ2PMkSA3NWIHm4Ak3hg1jM4M8/TmEUgtj9EK6.7V8ajmQrEA7GIh1gAigmhS377TXDZgGzakXYRF*LtUPfnKC*Ei4b8miBYkmWHshuUe6IwRKhQHzmkcGUw7gh.HuFjPZtpFY!/b&bo=CQR4AwAAAAABF0Y!&rf=viewer_4" width="200"/>
+<img src="http://m.qpic.cn/psc?/V5428EvQ2PMkSA3NWIHm4Ak3hg45PLib/TmEUgtj9EK6.7V8ajmQrEOT4aMcqb5tEoWw7lYhTlaq6PfhIuVYa91Zg8w3k7lVZFEW.Y8dcpC0bWEVCNSIQvvqt69Gb*nqE4qXPsDtQfls!/b&bo=ZgR4AwAAAAABFyk!&rf=viewer_4" width="200"/>
 
 ### Chernoff face
 
-<img src="http://m.qpic.cn/psc?/V5428EvQ2PMkSA3NWIHm4Ak3hg1jM4M8/TmEUgtj9EK6.7V8ajmQrEPQnvEMYtYvp*6.SLJia0qDNUAuR*fJsG7W81Q93nVf3i0uWl5Fc1J0B9GRIt18.O3B2uERg*9RjxUuYt6708S4!/b&bo=sAX*AgAAAAABF3g!&rf=viewer_4" width="400"/>
+<img src="http://m.qpic.cn/psc?/V5428EvQ2PMkSA3NWIHm4Ak3hg45PLib/TmEUgtj9EK6.7V8ajmQrEI5kvVg4NO74yWTzKslWPiNsITirRfS7i7aVVU4eKz6xEftWtSDrbJznZflSXG4lqPT5SYj.vL40CuA7hv5lqZY!/b&bo=2QX*AgAAAAABFxE!&rf=viewer_4" width="400"/>
 
 ### Schoeller
 
-<img src="http://m.qpic.cn/psc?/V5428EvQ2PMkSA3NWIHm4Ak3hg1jM4M8/TmEUgtj9EK6.7V8ajmQrEHDI2zP9xykKJE8B35OPu0t*E5BY5U442s0xKWw0DQthegx.b2vFoR38E83GSD0DA9*dKTWeUE682wfioAvwtlw!/b&bo=rQY1BAAAAAABF6o!&rf=viewer_4" width="500"/>
+<img src="http://m.qpic.cn/psc?/V5428EvQ2PMkSA3NWIHm4Ak3hg45PLib/TmEUgtj9EK6.7V8ajmQrEJxgqA6zKacIyWVqI1dsvgm0t8el8yLIIyKkatCvtLXFm03BnWImNlfZ9EyRr*wtXQ4Iasm4SWyJupSE5YcHhaw!/b&bo=qQZRAwAAAAABF80!&rf=viewer_4" width="500"/>
 
 ### Gibbs
 
-<img src="http://m.qpic.cn/psc?/V5428EvQ2PMkSA3NWIHm4Ak3hg1jM4M8/TmEUgtj9EK6.7V8ajmQrEOgyK8NC1n6NDKj3MDe4ZlelftwUYpZzp9mvT2bHfKK6Q0D4MG3lunZr1pGIn0JzB7aH2ibjwHibYTyH3FaZ6Bs!/b&bo=KQY4BAAAAAABFyM!&rf=viewer_4" width="600"/>
+<img src="http://m.qpic.cn/psc?/V5428EvQ2PMkSA3NWIHm4Ak3hg45PLib/TmEUgtj9EK6.7V8ajmQrEEYIDsjXF2BR6qd0W.btr15at96MQhDvyw9uAAjsrtmZuZqOR3YtXE8KWjo55kp3zQ509JwGt1MUDib4fCnbvr4!/b&bo=JgY4BAAAAAABFyw!&rf=viewer_4" width="600"/>
+
+### Chadha
+
+<img src="http://m.qpic.cn/psc?/V5428EvQ2PMkSA3NWIHm4Ak3hg45PLib/TmEUgtj9EK6.7V8ajmQrEENdiG8P6729iw*UOcN1GpRnV0Yw2rOpgVpIwSeLkRxoIz18rWQigF.fqvwaERJlm55j.8vNKDPNptg3elsBLAE!/b&bo=PgQ4BAAAAAABFzY!&rf=viewer_4" width="400"/>
 
 ### Gaillardet
 
-<img src="http://m.qpic.cn/psc?/V5428EvQ2PMkSA3NWIHm4Ak3hg1jM4M8/TmEUgtj9EK6.7V8ajmQrECWuBgqtckt0E5Vdw0Fg4KG1A0z0b6JG92wBVeKdj4hajDD*j1mMN2WQa03QT0x8SE4aPyd17q*mowLeHr8dqAI!/b&bo=Pgo4BAAAAAABFzg!&rf=viewer_4" width="600"/>
+<img src="http://m.qpic.cn/psc?/V5428EvQ2PMkSA3NWIHm4Ak3hg45PLib/TmEUgtj9EK6.7V8ajmQrECsn0CF64ozzuyGKuF1Zy.ZbPZrJGJ32i50dguivjbGLIOHY9cOi1QLA1Zo8sk*aMPHQGu*NLlpBEkm*1vNbkEs!/b&bo=Kwo4BAAAAAABFy0!&rf=viewer_4" width="600"/>
 
 ### HFE-D
 
-<img src="http://m.qpic.cn/psc?/V5428EvQ2PMkSA3NWIHm4Ak3hg1jM4M8/TmEUgtj9EK6.7V8ajmQrEF95xIluTfjVHciJSrMVeUAKx62rti54ZRFl6RGBYir7JXHcuI5X0BZCNsm2CKfaCZdzcjicCARYlBmKKBIZRE4!/b&bo=qAU4BAAAAAABF6E!&rf=viewer_4" width="600"/>
+<img src="http://m.qpic.cn/psc?/V5428EvQ2PMkSA3NWIHm4Ak3hg45PLib/TmEUgtj9EK6.7V8ajmQrENfr7msUfIWvp3kVfM8MrjAN69HYZrIFaJ7sEWMk1ikSlnro6GZmXw1k2u..tuy8WVBrAvfoMM9cjmh4.rjMSUI!/b&bo=qAU4BAAAAAABF6E!&rf=viewer_4" width="600"/>
 
 ## License
 
@@ -136,4 +137,4 @@ WQChartPy is distributed under the GNU General Public License v3.0. See the [LIC
 
 ## Contributing to WQChartPy
 
-Users are welcome to submit bug reports, feature requests, and code contributions to this project through GitHub or mail to us.
+Users are welcome to submit bug reports, feature requests, and code contributions to this project through GitHub or mail to us at jingyang@cug.edu.cn.
