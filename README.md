@@ -31,7 +31,8 @@ The repository contains:
 ¦ +-- schoeller.py                           # Code for generating Schoeller diagram
 ¦ +-- stiff.py                               # Code for generating Stiff diagram
 ¦ +-- triangle_piper.py                      # Code for generating triangle Piper diagram
-+-- LICENCE     
++-- LICENCE 
++-- MANIFEST.in 
 +-- README.md         
 +-- setup.py                                 # Centre script of and installing this package
 ```
