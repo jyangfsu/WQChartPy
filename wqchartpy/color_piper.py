@@ -5,6 +5,7 @@ Created on Wed Oct 22 14:07:24 2021
 @author: Luk Peeters
 """
 # Load required packages
+import os
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -103,7 +104,9 @@ def plot(df,
     ind_d   = np.logical_or(ind_ld==1, ind_ud==1)
 
     # interpolate RGB values
-    rgb_interp = np.load('BivariateColourScheme.npy', allow_pickle=True, fix_imports=True, encoding='latin1').item()
+    # rgb_interp = np.load('BivariateColourScheme.npy', allow_pickle=True, fix_imports=True, encoding='latin1').item()
+    current_dir = os.path.dirname(__file__)
+    rgb_interp = np.load(os.path.join(current_dir, 'BivariateColourScheme.npy'), allow_pickle=True, fix_imports=True, encoding='latin1').item()
     rgba = ['R','G','B','A']
     rgba_dic = {}
     for col in rgba:
