@@ -79,11 +79,11 @@ Triangle Piper| from wqchartpy import triangle_piper; triangle_piper.plot(df, un
 Rectangle Piper| from wqchartpy import rectangle_piper; rectangle_piper.plot(df, unit, figname, figformat)
 Color-coded Piper| from wqchartpy import color_piper; color_piper.plot(df, unit, figname, figformat)
 Durov| from wqchartpy import durvo; durvo.plot(df, unit, figname, figformat)
-Chadha| from wqchartpy import chadha; chadha.plot(df, unit, figname, figformat)
 Stiff| from wqchartpy import stiff; stiff.plot(df, unit, figname, figformat)
 Chernoff face| from wqchartpy import chernoff; chernoff.plot(df, unit, figname, figformat)
 Schoeller| from wqchartpy import schoeller; schoeller.plot(df, unit, figname, figformat)
 Gibbs| from wqchartpy import gibbs; gibbs.plot(df, unit, figname, figformat)
+Chadha| from wqchartpy import chadha; chadha.plot(df, unit, figname, figformat)
 Gaillardet| from wqchartpy import gaillardet; gaillardet.plot(df, unit, figname, figformat)
 HFE-D| from wqchartpy import hfed; hfed.plot(df, unit, figname, figformat)
 
