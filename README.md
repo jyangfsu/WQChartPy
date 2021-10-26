@@ -17,7 +17,7 @@ The repository contains:
 ¦ +-- ...                                    # ... 
 ¦ +-- Ray-2008-Reproducing the ...           # Reference for rectangle Piper diagram    
 +-- wqchartpy
-¦ +-- BivariateColourScheme.npy              # NumPy ndarray object used to fill the background color
+¦ +-- BivariateColourScheme.npy              # NumPy ndarray object used to for the background color scheme
 ¦ +-- __init__.py                            # Common script used in the regular package  
 ¦ +-- chadha.py                              # Code for generating the Chadha diagram
 ¦ +-- chernoff.py                            # Code for generating Chernoff faces
@@ -31,9 +31,9 @@ The repository contains:
 ¦ +-- schoeller.py                           # Code for generating Schoeller diagram
 ¦ +-- stiff.py                               # Code for generating Stiff diagram
 ¦ +-- triangle_piper.py                      # Code for generating triangle Piper diagram
-+-- LICENCE 
-+-- MANIFEST.in 
-+-- README.md         
++-- LICENCE                                  # Licence file
++-- MANIFEST.in                              # Adding BivariateColourScheme.npy to the source distribution 
++-- README.md                                # Readme file
 +-- setup.py                                 # Centre script of and installing this package
 ```
 
@@ -131,6 +131,10 @@ HFE-D| from wqchartpy import hfed; hfed.plot(df, unit, figname, figformat)
 ### HFE-D
 
 <img src="http://m.qpic.cn/psc?/V5428EvQ2PMkSA3NWIHm4Ak3hg45PLib/TmEUgtj9EK6.7V8ajmQrENfr7msUfIWvp3kVfM8MrjAN69HYZrIFaJ7sEWMk1ikSlnro6GZmXw1k2u..tuy8WVBrAvfoMM9cjmh4.rjMSUI!/b&bo=qAU4BAAAAAABF6E!&rf=viewer_4" width="600"/>
+
+## How to cite
+
+Jing Yang, Honghua Liu, Zhonghua Tang, Luk Peeters, Ming Ye. 2021. Visualization of water geochemistry data using Python and WQChartPy. Submitted to Groundwater for publication.
 
 ## License
 
