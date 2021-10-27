@@ -34,7 +34,7 @@ The repository contains:
 +-- LICENCE                                  # Licence file
 +-- MANIFEST.in                              # Adding BivariateColourScheme.npy to the source distribution 
 +-- README.md                                # Readme file
-+-- setup.py                                 # Centre script of and installing this package
++-- setup.py                                 # Centre script for installing this package
 ```
 
 ## Installation
