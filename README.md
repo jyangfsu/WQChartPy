@@ -119,7 +119,7 @@ HFE-D| from wqchartpy import hfed; hfed.plot(df, unit, figname, figformat)
 
 ### Stiff
 
-<img src="http://m.qpic.cn/psc?/V5428EvQ2PMkSA3NWIHm4Ak3hg45PLib/TmEUgtj9EK6.7V8ajmQrEOT4aMcqb5tEoWw7lYhTlaq6PfhIuVYa91Zg8w3k7lVZFEW.Y8dcpC0bWEVCNSIQvvqt69Gb*nqE4qXPsDtQfls!/b&bo=ZgR4AwAAAAABFyk!&rf=viewer_4" width="200"/>
+<img src="http://m.qpic.cn/psc?/V5428EvQ2PMkSA3NWIHm4Ak3hg45PLib/TmEUgtj9EK6.7V8ajmQrEFDP5srN0pcH1HRqLbjEYEZth.Y7CLr4mjgaSENZ6s.*nG8K3r233ZpOdBXiY9Cye0aAHvCRUEaFELfRKU2ixdk!/b&bo=2QVFAwAAAAABF6o!&rf=viewer_4" width="300"/>
 
 ### Chernoff face
 
