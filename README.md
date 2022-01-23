@@ -109,6 +109,10 @@ HFE-D| from wqchartpy import hfed; hfed.plot(df, unit, figname, figformat)
 
 <img src="http://m.qpic.cn/psc?/V5428EvQ2PMkSA3NWIHm4Ak3hg45PLib/TmEUgtj9EK6.7V8ajmQrEH5ZUa7NHBJfUicR19oK1LdR.4BlQkIGQK5ZStLnkw0hw2dZ3HZ0RMTh6MUXtCT8lS9iKyNVp*yqKMdenah5Gyw!/b&bo=kQQ4BAAAAAABF5k!&rf=viewer_4" width="400"/>
 
+### Contour-filled Piper
+
+<img src="http://m.qpic.cn/psc?/V5428EvQ2PMkSA3NWIHm4Ak3hg45PLib/TmEUgtj9EK6.7V8ajmQrELaJZx2xDjJTZR7e5mjwQ7hVXxTfCTamHwVQU09sclARJPwdmwMWxWwhlVnwZqUne89Ni3WCFfFZPYh*CXc15tE!/b&bo=kgIVAgAAAAABF7c!&rf=viewer_4" width="400"/>
+
 ### Durvo
 
 <img src="http://m.qpic.cn/psc?/V5428EvQ2PMkSA3NWIHm4Ak3hg45PLib/TmEUgtj9EK6.7V8ajmQrEFxdTbgG*WQO88FndxW.Yi94JPq2olGWH40hp7aJUSUBfllLfuM1pbdQqRRxq4s4NN6vnbc2VWzTwzyvK3mKxN0!/b&bo=3AU4BAAAAAABF9U!&rf=viewer_4" width="600"/>
