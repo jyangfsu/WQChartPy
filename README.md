@@ -16,10 +16,10 @@ The repository contains:
 ¦ +-- data_Yang_et_al_2021.csv               # Example water geochemsitry dataset taken from Yang et al. 2020 in CSV format
 ¦ +-- data_Moreno_Merino_et_al_2021.csv      # Example water geochemsitry dataset taken from Moreno Merino et al. 2021 in CSV format
 +-- examples         
-¦ +-- example_data_template.ipynb            # Example workflow to illustrate how to use WQChartPy by using dataset taken from Ray et al. 2014
-¦ +-- example_Liu_et_al_2021.ipynb           # Example workflow to illustrate how to use WQChartPy by using dataset taken from Liu et al. 2021
-¦ +-- example_Moreno_Merino_et_al_2021.ipynb # Example workflow to illustrate how to use WQChartPy by using dataset taken from Moreno Merino et al. 2021
-¦ +-- example_Yang_et_al_2020.ipynb          # Example workflow to illustrate how to use WQChartPy by using dataset taken from Yang et al. 2020
+¦ +-- example_data_template.ipynb            # Jupyter notebook to illustrate how to use WQChartPy by using dataset taken from Ray et al. 2014
+¦ +-- example_Liu_et_al_2021.ipynb           # Jupyter notebook  illustrate how to use WQChartPy by using dataset taken from Liu et al. 2021
+¦ +-- example_Moreno_Merino_et_al_2021.ipynb # Jupyter notebook  to illustrate how to use WQChartPy by using dataset taken from Moreno Merino et al. 2021
+¦ +-- example_Yang_et_al_2020.ipynb          # Jupyter notebook  to illustrate how to use WQChartPy by using dataset taken from Yang et al. 2020
 +-- papers
 ¦ +-- Chadha-1999-A proposed ...             # Reference for Chadha diagram    
 ¦ +-- ...                                    # ... 
