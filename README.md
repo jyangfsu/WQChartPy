@@ -9,17 +9,17 @@ The repository contains:
 
 ```bash
 +-- data                                         
-¦ +-- data_template.csv                      # Example water geochemsitry dataset take from Ray et al. 2014 in CSV foramt 
-¦ +-- data_template.xlsx                     # Example water geochemsitry ddataset take from Ray et al. 2014 in MS Excel foramt 
-¦ +-- data_template.txt                      # Example water geochemsitry ddataset take from Ray et al. 2014 in Tab delimited Text format
-¦ +-- data_Liu_et_al_2021.csv                # Example water geochemsitry ddataset take from Liu et al. 2021 in CSV format
-¦ +-- data_Yang_et_al_2021.csv               # Example water geochemsitry ddataset take from Yang et al. 2020 in CSV format
-¦ +-- data_Moreno_Merino_et_al_2021.csv      # Example water geochemsitry ddataset take from Moreno Merino et al. 2021 in CSV format
+¦ +-- data_template.csv                      # Example water geochemsitry dataset taken from Ray et al. 2014 in CSV foramt 
+¦ +-- data_template.xlsx                     # Example water geochemsitry dataset taken from Ray et al. 2014 in MS Excel foramt 
+¦ +-- data_template.txt                      # Example water geochemsitry dataset taken from Ray et al. 2014 in Tab delimited Text format
+¦ +-- data_Liu_et_al_2021.csv                # Example water geochemsitry dataset taken from Liu et al. 2021 in CSV format
+¦ +-- data_Yang_et_al_2021.csv               # Example water geochemsitry dataset taken from Yang et al. 2020 in CSV format
+¦ +-- data_Moreno_Merino_et_al_2021.csv      # Example water geochemsitry dataset taken from Moreno Merino et al. 2021 in CSV format
 +-- examples         
-¦ +-- example_data_template.ipynb            # Example workflow to illustrate how to use WQChartPy by using dataset take from Ray et al. 2014
-¦ +-- example_Liu_et_al_2021.ipynb           # Example workflow to illustrate how to use WQChartPy by using dataset take from Liu et al. 2021
-¦ +-- example_Moreno_Merino_et_al_2021.ipynb # Example workflow to illustrate how to use WQChartPy by using dataset take from Moreno Merino et al. 2021
-¦ +-- example_Yang_et_al_2020.ipynb          # Example workflow to illustrate how to use WQChartPy by using dataset take from Yang et al. 2020
+¦ +-- example_data_template.ipynb            # Example workflow to illustrate how to use WQChartPy by using dataset taken from Ray et al. 2014
+¦ +-- example_Liu_et_al_2021.ipynb           # Example workflow to illustrate how to use WQChartPy by using dataset taken from Liu et al. 2021
+¦ +-- example_Moreno_Merino_et_al_2021.ipynb # Example workflow to illustrate how to use WQChartPy by using dataset taken from Moreno Merino et al. 2021
+¦ +-- example_Yang_et_al_2020.ipynb          # Example workflow to illustrate how to use WQChartPy by using dataset taken from Yang et al. 2020
 +-- papers
 ¦ +-- Chadha-1999-A proposed ...             # Reference for Chadha diagram    
 ¦ +-- ...                                    # ... 
