@@ -115,7 +115,7 @@ HFE-D| from wqchartpy import hfed; hfed.plot(df, unit, figname, figformat)
 
 ### Durvo
 
-<img src="http://m.qpic.cn/psc?/V5428EvQ2PMkSA3NWIHm4Ak3hg45PLib/TmEUgtj9EK6.7V8ajmQrEFxdTbgG*WQO88FndxW.Yi94JPq2olGWH40hp7aJUSUBfllLfuM1pbdQqRRxq4s4NN6vnbc2VWzTwzyvK3mKxN0!/b&bo=3AU4BAAAAAABF9U!&rf=viewer_4" width="600"/>
+<img src="http://m.qpic.cn/psc?/V5428EvQ2PMkSA3NWIHm4Ak3hg45PLib/TmEUgtj9EK6.7V8ajmQrEEELoir7Oh4SDzBYQWBXJICvbD3nwobK7w.AAFx2guuOu1H7LyyMwkYlEcEm8DlajY4MLCz1N2LBOjkMUqmtYNo!/b&bo=3AU4BAAAAAABF9U!&rf=viewer_4" width="600"/>
 
 ### Stiff
 
