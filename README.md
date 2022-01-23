@@ -123,7 +123,7 @@ HFE-D| from wqchartpy import hfed; hfed.plot(df, unit, figname, figformat)
 
 ### Chernoff face
 
-<img src="http://m.qpic.cn/psc?/V5428EvQ2PMkSA3NWIHm4Ak3hg45PLib/TmEUgtj9EK6.7V8ajmQrEI5kvVg4NO74yWTzKslWPiNsITirRfS7i7aVVU4eKz6xEftWtSDrbJznZflSXG4lqPT5SYj.vL40CuA7hv5lqZY!/b&bo=2QX*AgAAAAABFxE!&rf=viewer_4" width="400"/>
+<img src="http://m.qpic.cn/psc?/V5428EvQ2PMkSA3NWIHm4Ak3hg45PLib/TmEUgtj9EK6.7V8ajmQrEFDP5srN0pcH1HRqLbjEYEZth.Y7CLr4mjgaSENZ6s.*nG8K3r233ZpOdBXiY9Cye0aAHvCRUEaFELfRKU2ixdk!/b&bo=2QVFAwAAAAABF6o!&rf=viewer_4" width="400"/>
 
 ### Schoeller
 
