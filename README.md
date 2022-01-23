@@ -88,6 +88,7 @@ We recommend to start by executing the [workflow](https://github.com/jyangfsu/WQ
 Triangle Piper| from wqchartpy import triangle_piper; triangle_piper.plot(df, unit, figname, figformat)
 Rectangle Piper| from wqchartpy import rectangle_piper; rectangle_piper.plot(df, unit, figname, figformat)
 Color-coded Piper| from wqchartpy import color_piper; color_piper.plot(df, unit, figname, figformat)
+Contour-filled Piper| from wqchartpy import contour_piper; contour_piper.plot(df, unit, figname, figformat)
 Durov| from wqchartpy import durvo; durvo.plot(df, unit, figname, figformat)
 Stiff| from wqchartpy import stiff; stiff.plot(df, unit, figname, figformat)
 Chernoff face| from wqchartpy import chernoff; chernoff.plot(df, unit, figname, figformat)
@@ -119,7 +120,7 @@ HFE-D| from wqchartpy import hfed; hfed.plot(df, unit, figname, figformat)
 
 ### Stiff
 
-<img src="http://m.qpic.cn/psc?/V5428EvQ2PMkSA3NWIHm4Ak3hg45PLib/TmEUgtj9EK6.7V8ajmQrEJ0QBoQ3kzaRJmIjLTV2iGzJ1f88h7s7cZxWBVMD45bHVTWxXGhucZBhj7Ug7nTwNJTm53CIaNHFVO4HUOmHL6w!/b&bo=ZgTAAwAAAAABF5E!&rf=viewer_4" width="400"/>
+<img src="http://m.qpic.cn/psc?/V5428EvQ2PMkSA3NWIHm4Ak3hg45PLib/TmEUgtj9EK6.7V8ajmQrEJ0QBoQ3kzaRJmIjLTV2iGzJ1f88h7s7cZxWBVMD45bHVTWxXGhucZBhj7Ug7nTwNJTm53CIaNHFVO4HUOmHL6w!/b&bo=ZgTAAwAAAAABF5E!&rf=viewer_4" width="300"/>
 
 ### Chernoff face
 
