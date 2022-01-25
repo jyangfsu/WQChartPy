@@ -4,6 +4,7 @@ Created on Tue Sep 14 13:15:59 2021
 
 @author: Jing
 """
+import os
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -23,7 +24,7 @@ def plot(df,
     df : class:`pandas.DataFrame`
         Geochemical data to draw Gibbs diagram.
     unit : class:`string`
-        The unit used in df. Currently only mg/L is supported. 
+        The unit used in df. Currently only mg/L and meq/L are supported. 
     figname : class:`string`
         A path or file name when saving the figure.
     figformat : class:`string`
@@ -41,14 +42,14 @@ def plot(df,
     if not {'Na', 'Ca', 'HCO3', 'Cl', 'TDS'}.issubset(df.columns):
         raise RuntimeError("""
         Gibbs diagram uses geochemical parameters Na, Ca, Cl, HCO3, and TDS.
-        Confirm that these parameters are provided.""")
+         Confirm that these parameters are provided in the input file.""")
         
-    # Determine if the provided unit is allowed.
-    ALLOWED_UNITS = ['mg/L']
+    # Determine if the provided unit is allowed
+    ALLOWED_UNITS = ['mg/L', 'meq/L']
     if unit not in ALLOWED_UNITS:
         raise RuntimeError("""
-        Currently only mg/L is supported.
-        Convert the unit if needed.""")
+        Currently only mg/L and meq/L are supported.
+        Convert the unit manually if needed.""")
         
     # Load the wrapped lines taken from Gibbs (1970)
     Cl_HCO3_plot_wrapped_lines = np.array([
@@ -184,10 +185,22 @@ def plot(df,
             Labels.append(TmpLabel)
     
         try:
-            x = df.at[i, 'Na'] / ions_WEIGHT['Na'] / \
-                (df.at[i, 'Na'] / ions_WEIGHT['Na'] + \
-                 df.at[i, 'Ca'] / ions_WEIGHT['Ca'])
-            y = df.at[i, 'TDS']
+            if unit == 'mg/L':
+                x = df.at[i, 'Na'] / ions_WEIGHT['Na'] / \
+                    (df.at[i, 'Na'] / ions_WEIGHT['Na'] + \
+                     df.at[i, 'Ca'] / ions_WEIGHT['Ca'])
+
+            elif unit == 'meq/L':
+                x = df.at[i, 'Na'] / ions_WEIGHT['Na'] / ions_CHARGE['Na'] / \
+                    (df.at[i, 'Na'] / ions_WEIGHT['Na'] / ions_CHARGE['Na'] + \
+                     df.at[i, 'Ca'] / ions_WEIGHT['Ca'] / ions_CHARGE['Ca'])
+            
+            else:
+                raise RuntimeError("""
+                Currently only mg/L and meq/L are supported.
+                Convert the unit if needed.""")
+       
+            y = df.at[i, 'TDS']   
             ax1.scatter(x, y, 
                         marker=df.at[i, 'Marker'],
                         s=df.at[i, 'Size'], 
@@ -296,7 +309,8 @@ def plot(df,
                labelspacing=0.25, handletextpad=0.25)
     
     # Display the info
-    print("Gibbs plot created. Saving it now...\n")
+    cwd = os.getcwd()
+    print("Gibbs plot created. Saving it to %s \n" %cwd)
     
     # Save the figure
     plt.savefig(figname + '.' + figformat, format=figformat, 

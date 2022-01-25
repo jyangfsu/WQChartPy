@@ -4,21 +4,22 @@ Created on Wed Sep 15 16:38:48 2021
 
 @author: Jing
 """
-
+import os
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+from matplotlib.ticker import MaxNLocator
 import matplotlib as mpl
 from pylab import *
 
-from .ions import ions_WEIGHT, ions_CHARGE
+from ions import ions_WEIGHT, ions_CHARGE
 
 # Define the plotting function
 def plot(df, 
          unit='mg/L', 
          figname='Stiff diagram', 
          figformat='jpg'):
-    """Plot the Piper diagram.
+    """Plot the Stiff diagram.
     
     Parameters
     ----------
@@ -46,36 +47,46 @@ def plot(df,
         raise RuntimeError("""
         Stiff diagram uses geochemical parameters Ca, Mg, Na, K, HCO3, Cl, and SO4.
         Also, Sample is requied to save the Stiff diagram to disk for each sample.
-        Confirm that these parameters are provided.""")
+        Confirm that these parameters are provided in the input file.""")
         
     # Determine if the provided unit is allowed
-    ALLOWED_UNITS = ['mg/L']
+    ALLOWED_UNITS = ['mg/L', 'meq/L']
     if unit not in ALLOWED_UNITS:
         raise RuntimeError("""
-        Currently only mg/L is supported.
-        Convert the unit if needed.""")
+        Currently only mg/L and meq/L are supported.
+        Convert the unit manually if needed.""")
         
-    # Convert mg/L to meq/L
-    gmol = np.array([ions_WEIGHT['Ca'], 
-                     ions_WEIGHT['Mg'], 
-                     ions_WEIGHT['Na'], 
-                     ions_WEIGHT['K'], 
-                     ions_WEIGHT['HCO3'],
-                     ions_WEIGHT['Cl'], 
-                     ions_WEIGHT['SO4']])
-
-    eqmol = np.array([ions_CHARGE['Ca'], 
-                      ions_CHARGE['Mg'], 
-                      ions_CHARGE['Na'], 
-                      ions_CHARGE['K'], 
-                      ions_CHARGE['HCO3'],  
-                      ions_CHARGE['Cl'], 
-                      ions_CHARGE['SO4']])
-
-    tmpdf = df[['Ca', 'Mg', 'Na', 'K', 'HCO3', 'Cl', 'SO4']]
-    dat = tmpdf.values
+    # Convert unit if needed
+    if unit == 'mg/L':
+        gmol = np.array([ions_WEIGHT['Ca'], 
+                         ions_WEIGHT['Mg'], 
+                         ions_WEIGHT['Na'], 
+                         ions_WEIGHT['K'], 
+                         ions_WEIGHT['HCO3'],
+                         ions_WEIGHT['Cl'], 
+                         ions_WEIGHT['SO4']])
     
-    meqL = (dat / abs(gmol)) * abs(eqmol)
+        eqmol = np.array([ions_CHARGE['Ca'], 
+                          ions_CHARGE['Mg'], 
+                          ions_CHARGE['Na'], 
+                          ions_CHARGE['K'], 
+                          ions_CHARGE['HCO3'],  
+                          ions_CHARGE['Cl'], 
+                          ions_CHARGE['SO4']])
+    
+        tmpdf = df[['Ca', 'Mg', 'Na', 'K', 'HCO3', 'Cl', 'SO4']]
+        dat = tmpdf.values
+        
+        meqL = (dat / abs(gmol)) * abs(eqmol)
+        
+    elif unit == 'meq/L':
+        meqL = df[['Ca', 'Mg', 'Na', 'K', 'HCO3', 'Cl', 'SO4']].values
+    
+    else:
+        raise RuntimeError("""
+        Currently only mg/L and meq/L are supported.
+        Convert the unit if needed.""")
+   
     cat_max = np.max(np.array(((meqL[:, 2] + meqL[:, 3]), meqL[:, 0], meqL[:, 1])))
     an_max = np.max(meqL[:, 4:])
     
@@ -90,27 +101,26 @@ def plot(df,
             Labels.append(TmpLabel)
     
         try:
-            #xtickpositions = [-10, -5, 0, 5, 10]
-            
             x = [-(meqL[i, 2] + meqL[i, 3]), -meqL[i, 0], -meqL[i, 1], 
                  meqL[i, 6], meqL[i, 4], meqL[i, 5], -(meqL[i, 2] + meqL[i, 3])]
             y = [3, 2, 1, 1, 2, 3, 3]
             
             plt.figure(figsize=(3, 3))
             plt.fill(x, y, facecolor='w', edgecolor='k', linewidth=1.25)
-            plt.plot([0, 0], [1, 3], 'k-.', linewidth=1.25)
-            plt.plot([-0.5, 0.5], [2,2], 'k')
-            plt.plot([-0.5, 0.5], [3,3], 'k')
-            plt.xlim([-cat_max, an_max])
-            plt.text(-cat_max, 2.9, 'Na$^+$' + '+' + 'K$^+$', fontsize=12, ha= 'right')
-            plt.text(-cat_max, 1.9, 'Ca$^{2+}$', fontsize=12, ha= 'right')
-            plt.text(-cat_max, 1.0, 'Mg$^{2+}$', fontsize=12, ha= 'right')
             
-            plt.text(an_max, 2.9,'Cl$^-$',fontsize=12, ha= 'left')
-            plt.text(an_max, 1.9,'HCO'+'$_{3}^-$',fontsize=12,ha= 'left')
-            plt.text(an_max, 1.0,'SO'+'$_{4}^{2-}$',fontsize=12,ha= 'left')
-
-            #plt.xticks(xtickpositions, ['10', '5', '0', '5', '10', '20']) 
+            plt.plot([0, 0], [1, 3], 'k-.', linewidth=1.25)
+            plt.plot([-0.5, 0.5], [2, 2], 'k-')
+  
+            cmax = cat_max if cat_max > an_max else an_max
+            plt.xlim([-cmax, cmax])
+            plt.text(-cmax, 2.9, 'Na$^+$' + '+' + 'K$^+$', fontsize=12, ha= 'right')
+            plt.text(-cmax, 1.9, 'Ca$^{2+}$', fontsize=12, ha= 'right')
+            plt.text(-cmax, 1.0, 'Mg$^{2+}$', fontsize=12, ha= 'right')
+            
+            plt.text(cmax, 2.9,'Cl$^-$',fontsize=12, ha= 'left')
+            plt.text(cmax, 1.9,'HCO'+'$_{3}^-$',fontsize=12,ha= 'left')
+            plt.text(cmax, 1.0,'SO'+'$_{4}^{2-}$',fontsize=12,ha= 'left')
+            
             ax = plt.gca()
             ax.spines['left'].set_color('None')
             ax.spines['right'].set_color('None')
@@ -122,15 +132,24 @@ def plot(df,
             ax.spines['bottom'].set_color('k')
             #ylim(0.8, 3.2)
             setp(gca(), yticks=[], yticklabels=[])
+            #plt.gca().xaxis.set_major_locator(MaxNLocator(integer=True))
+            ticks = np.array([-cmax, -cmax/2, 0, cmax/2, cmax])
+            tickla = [f'{tick:1.0f}' for tick in abs(ticks)]
+            ax.xaxis.set_ticks(ticks)
+            ax.xaxis.set_ticklabels(tickla)
+            
             labels = ax.get_xticklabels()
             [label.set_fontsize(10) for label in labels]
             ax.set_xlabel('Stiff diagram (meq/L)', fontsize=12, weight='normal')
                 
+            ax.set_title(df.at[i, 'Sample'], fontsize=14, weight='normal')
+
         except(ValueError):
                 pass
     
         # Display the info
-        print("Stiff plot created for %s. Saving it now...\n" %str(df.at[i, 'Sample']))
+        cwd = os.getcwd()
+        print("Stiff plot created for %s. Saving it to %s\n" %(str(df.at[i, 'Sample']), cwd))
     
         # Save the figure
         plt.savefig(figname + '_' + str(df.at[i, 'Sample']) + '.' + figformat, format=figformat, 

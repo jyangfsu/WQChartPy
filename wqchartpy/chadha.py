@@ -5,6 +5,7 @@ Created on Thu Sep 16 11:36:50 2021
 @author: Jing
 """
 # Import modules
+import os
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -40,14 +41,14 @@ def plot(df,
     if not {'Ca', 'Mg', 'Na', 'K', 'HCO3', 'CO3', 'Cl', 'SO4'}.issubset(df.columns):
         raise RuntimeError("""
         Chada diagram uses geochemical parameters Ca, Mg, Na, K, HCO3, CO3, Cl, and SO4.
-        Confirm that these parameters are provided.""")
+        Confirm that these parameters are provided in the input file.""")
         
     # Determine if the provided unit is allowed.
-    ALLOWED_UNITS = ['mg/L']
+    ALLOWED_UNITS = ['mg/L', 'meq/L']
     if unit not in ALLOWED_UNITS:
         raise RuntimeError("""
-        Currently only mg/L is supported.
-        Convert the unit if needed.""")
+        The unit used in df. Currently only mg/L and meq/L are supported. 
+        Convert the unit manually if needed.""")
         
     # Change default settings for figures
     # -------------------------------------------------------------------------
@@ -69,7 +70,7 @@ def plot(df,
     ymax = +100
     
     plt.figure(figsize=(8, 8))
-    ax = plt.subplot(111)
+    ax = plt.subplot(111, aspect='equal')
     
     ax.spines['left'].set_visible(False)
     ax.spines['bottom'].set_visible(False)
@@ -122,33 +123,34 @@ def plot(df,
     plt.text(-50, 50, '8', fontsize=26, color="0.6", 
              ha='center', va='center')
     
-    
-    
-    
     # Convert mg/L to meq/L
     # -------------------------------------------------------------------------
-    gmol = np.array([ions_WEIGHT['Ca'], 
-                     ions_WEIGHT['Mg'], 
-                     ions_WEIGHT['Na'], 
-                     ions_WEIGHT['K'], 
-                     ions_WEIGHT['HCO3'],
-                     ions_WEIGHT['CO3'], 
-                     ions_WEIGHT['Cl'], 
-                     ions_WEIGHT['SO4']])
-
-    eqmol = np.array([ions_CHARGE['Ca'], 
-                      ions_CHARGE['Mg'], 
-                      ions_CHARGE['Na'], 
-                      ions_CHARGE['K'], 
-                      ions_CHARGE['HCO3'], 
-                      ions_CHARGE['CO3'], 
-                      ions_CHARGE['Cl'], 
-                      ions_CHARGE['SO4']])
-
-    tmpdf = df[['Ca', 'Mg', 'Na', 'K', 'HCO3', 'CO3', 'Cl', 'SO4']]
-    dat = tmpdf.values
+    if unit == 'mg/L':
+        gmol = np.array([ions_WEIGHT['Ca'], 
+                         ions_WEIGHT['Mg'], 
+                         ions_WEIGHT['Na'], 
+                         ions_WEIGHT['K'], 
+                         ions_WEIGHT['HCO3'],
+                         ions_WEIGHT['CO3'], 
+                         ions_WEIGHT['Cl'], 
+                         ions_WEIGHT['SO4']])
     
-    meqL = (dat / abs(gmol)) * abs(eqmol)
+        eqmol = np.array([ions_CHARGE['Ca'], 
+                          ions_CHARGE['Mg'], 
+                          ions_CHARGE['Na'], 
+                          ions_CHARGE['K'], 
+                          ions_CHARGE['HCO3'], 
+                          ions_CHARGE['CO3'], 
+                          ions_CHARGE['Cl'], 
+                          ions_CHARGE['SO4']])
+    
+        tmpdf = df[['Ca', 'Mg', 'Na', 'K', 'HCO3', 'CO3', 'Cl', 'SO4']]
+        dat = tmpdf.values
+        
+        meqL = (dat / abs(gmol)) * abs(eqmol)
+    else:
+        meqL = df[['Ca', 'Mg', 'Na', 'K', 'HCO3', 'CO3', 'Cl', 'SO4']].values
+    
     
     # Calculate the percentages
     # -------------------------------------------------------------------------
@@ -174,7 +176,21 @@ def plot(df,
             Labels.append(TmpLabel)
     
         try:
-            ax.scatter(100 * (cat[i, 0] +  cat[i, 1] - cat[i, 2]), 
+            if (df['Color'].dtype is np.dtype('float')) or \
+                (df['Color'].dtype is np.dtype('int64')):
+                vmin = np.min(df['Color'].values)
+                vmax = np.max(df['Color'].values)
+                cf = ax.scatter(100 * (cat[i, 0] +  cat[i, 1] - cat[i, 2]), 
+                           100 * (an[i, 0] - (an[i, 1] + an[i, 2])), 
+                           marker=df.at[i, 'Marker'],
+                           s=df.at[i, 'Size'], 
+                           c=df.at[i, 'Color'], vmin=vmin, vmax=vmax,
+                           alpha=df.at[i, 'Alpha'],
+                           label=TmpLabel, 
+                           edgecolors='black') 
+            
+            else:
+                ax.scatter(100 * (cat[i, 0] +  cat[i, 1] - cat[i, 2]), 
                        100 * (an[i, 0] - (an[i, 1] + an[i, 2])), 
                        marker=df.at[i, 'Marker'],
                        s=df.at[i, 'Size'], 
@@ -186,12 +202,18 @@ def plot(df,
             pass
             
     # Creat the legend
+    if (df['Color'].dtype is np.dtype('float')) or (df['Color'].dtype is np.dtype('int64')):
+        cb = plt.colorbar(cf, extend='both', spacing='uniform',
+                          orientation='vertical', fraction=0.025, pad=0.05)
+        cb.ax.set_ylabel('$TDS$' + ' ' + '$(mg/L)$', rotation=90, labelpad=-55, fontsize=14)
+    
     ax.legend(bbox_to_anchor=(0.085, 0.95), markerscale=1, fontsize=12,
               frameon=False, 
               labelspacing=0.25, handletextpad=0.25)
     
     # Display the info
-    print("Chada plot created. Saving it now...\n")
+    cwd = os.getcwd()
+    print("Chadha plot created. Saving it to %s \n" %cwd)
     
     # Save the figure
     
@@ -221,6 +243,10 @@ if __name__ == '__main__':
             }
     df = pd.DataFrame(data)
     # df = pd.read_csv('../data/data_template.csv')
+    df.loc[df['Label']=='C1', 'Marker'] = 'o'
+    df.loc[df['Label']=='C2', 'Marker'] = 's'
+    df.loc[df['Label']=='C3', 'Marker'] = '^'
+    df.loc[:, 'Color'] = df.loc[:, 'TDS'].values
     plot(df, unit='mg/L', figname='Chada diagram', figformat='jpg')
 
     

@@ -10,7 +10,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib as mpl
 
-from ions import ions_WEIGHT, ions_CHARGE
+from .ions import ions_WEIGHT, ions_CHARGE
 
 # Define the plotting function
 def plot(df, 

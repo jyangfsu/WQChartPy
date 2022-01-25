@@ -4,7 +4,7 @@ Created on Thu Sep 16 13:11:29 2021
 
 @author: Jing
 """
-
+import os
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -41,38 +41,48 @@ def plot(df,
     if not {'Ca', 'Mg', 'Na', 'K', 'Cl', 'SO4', 'HCO3'}.issubset(df.columns):
         raise RuntimeError("""
         Schoeller diagram uses geochemical parameters Ca, Mg, Na, K, Cl, SO4, and HCO3.
-        Confirm that these parameters are provided.""")
+        Confirm that these parameters are provided in the input file.""")
         
-    # Determine if the provided unit is allowed.
-    ALLOWED_UNITS = ['mg/L']
+    # Determine if the provided unit is allowed
+    ALLOWED_UNITS = ['mg/L', 'meq/L']
     if unit not in ALLOWED_UNITS:
         raise RuntimeError("""
-        Currently only mg/L is supported.
-        Convert the unit if needed.""")
+        Currently only mg/L and meq/L are supported.
+        Convert the unit manually if needed.""")
     
-    # Convert mg/L to meq/L
+    
+    # Convert unit if needed
     # -------------------------------------------------------------------------
-    gmol = np.array([ions_WEIGHT['Ca'], 
-                     ions_WEIGHT['Mg'], 
-                     ions_WEIGHT['Na'], 
-                     ions_WEIGHT['K'], 
-                     ions_WEIGHT['Cl'], 
-                     ions_WEIGHT['SO4'],
-                     ions_WEIGHT['HCO3']])
-
-    eqmol = np.array([ions_CHARGE['Ca'], 
-                      ions_CHARGE['Mg'], 
-                      ions_CHARGE['Na'], 
-                      ions_CHARGE['K'],
-                      ions_CHARGE['Cl'],
-                      ions_CHARGE['SO4'],
-                      ions_CHARGE['HCO3']])
-
-    tmpdf = df[['Ca', 'Mg', 'Na', 'K', 'Cl', 'SO4', 'HCO3']]
-    dat = tmpdf.values
+    if unit == 'mg/L':
+        gmol = np.array([ions_WEIGHT['Ca'], 
+                         ions_WEIGHT['Mg'], 
+                         ions_WEIGHT['Na'], 
+                         ions_WEIGHT['K'], 
+                         ions_WEIGHT['Cl'], 
+                         ions_WEIGHT['SO4'],
+                         ions_WEIGHT['HCO3']])
     
-    meqL = (dat / abs(gmol)) * abs(eqmol)
+        eqmol = np.array([ions_CHARGE['Ca'], 
+                          ions_CHARGE['Mg'], 
+                          ions_CHARGE['Na'], 
+                          ions_CHARGE['K'],
+                          ions_CHARGE['Cl'],
+                          ions_CHARGE['SO4'],
+                          ions_CHARGE['HCO3']])
     
+        tmpdf = df[['Ca', 'Mg', 'Na', 'K', 'Cl', 'SO4', 'HCO3']]
+        dat = tmpdf.values
+        
+        meqL = (dat / abs(gmol)) * abs(eqmol)
+        
+    elif unit == 'meq/L':
+        meqL = df[['Ca', 'Mg', 'Na', 'K', 'Cl', 'SO4', 'HCO3']].values
+        
+    else:
+        raise RuntimeError("""
+        Currently only mg/L and meq/L are supported.
+        Convert the unit if needed.""")
+        
     # Do the plot
     # -------------------------------------------------------------------------
     fig = plt.figure(figsize=(6, 3))
@@ -113,11 +123,12 @@ def plot(df,
         plt.axvline(xtick, linewidth=1, color='grey', linestyle='dashed')
             
     # Creat the legend
-    ax.legend(loc='best', markerscale=1, frameon=False, fontsize=12,
+    ax.legend(loc='best', markerscale=1, frameon=False, fontsize=10,
               labelspacing=0.25, handletextpad=0.25)
     
     # Display the info
-    print("Schoeller plot created. Saving it now...\n")
+    cwd = os.getcwd()
+    print("Schoeller diagram created. Saving it to %s \n" %cwd)
     
     # Save the figure
     plt.savefig(figname + '.' + figformat, format=figformat, 

@@ -4,6 +4,7 @@ Created on Wed Sep 30 20:51:33 2020
 
 @author: Jing
 """
+import os
 import numpy as np
 import pandas as pd
 import matplotlib as mpl
@@ -45,14 +46,14 @@ def plot(df,
         raise RuntimeError("""
         Durvo diagram uses geochemical parameters Ca, Mg, Na, K, HCO3, CO3, \
 Cl, SO4, pH, and TDS.
-        Confirm that these parameters are provided.""")
+        Confirm that these parameters are provided in the input file.""")
         
-    # Determine if the provided unit is allowed.
-    ALLOWED_UNITS = ['mg/L']
+    # Determine if the provided unit is allowed
+    ALLOWED_UNITS = ['mg/L', 'meq/L']
     if unit not in ALLOWED_UNITS:
         raise RuntimeError("""
-        Currently only mg/L is supported.
-        Convert the unit if needed.""")
+        Currently only mg/L and meq/L are supported.
+        Convert the unit manually if needed.""")
         
     # Calculate the traingles' location
     h = 0.5 * np.tan(np.pi / 3.0) 
@@ -170,21 +171,22 @@ Cl, SO4, pH, and TDS.
              ha='center', va='center', fontsize=12)
     
     # Right rectangle
-    tdslabels = ['0.0', '0.5', '1.0', '1.5', '2.0', '2.5', '3.0', '3.5']
+    tdslabels = ['0.0', '500', '1000', '1500', '2000', '2500', '3000', '3500']
     for i, x in enumerate(np.linspace(1, 2.618, 9)):
         ax.plot([x, x], 
                 [0, ticklength], 
                 'k', lw=1.0)
         if i in [1, 2, 3, 4, 5, 6, 7]:
-            ax.text(x, -2 * ticklength, tdslabels[i], ha='center', va='center')
-    ax.text(1 + 1.618 / 2, -0.12, 'TDS (g/L)', ha='center', va='center', fontsize=12)
+            ax.text(x, -2 * ticklength, tdslabels[i], ha='center', va='top')
+    ax.text(1 + 1.618 / 2, -0.12, 'TDS (mg/L)', ha='center', va='top', fontsize=12)
     
     # Label the watertypes in the central rectangle
     ax.text(0.15, 0.1, 'NaCl', ha='center', va='center', fontsize=12)
     ax.text(0.8, 0.9, 'CaHCO$_3$', ha='center', va='center', fontsize=12)
     
-    # Convert chemistry data into plot coordinates
-    gmol = np.array([ions_WEIGHT['Ca'], 
+    # Convert unit if needed
+    if unit == 'mg/L':
+        gmol = np.array([ions_WEIGHT['Ca'], 
                      ions_WEIGHT['Mg'], 
                      ions_WEIGHT['Na'], 
                      ions_WEIGHT['K'], 
@@ -194,20 +196,30 @@ Cl, SO4, pH, and TDS.
                      ions_WEIGHT['SO4'],  
                      1,          # Faked weight for pH
                      1000])      # Faked weight for TDS to convert mg/L to g/L
-    eqmol = np.array([ions_CHARGE['Ca'], 
-                      ions_CHARGE['Mg'], 
-                      ions_CHARGE['Na'], 
-                      ions_CHARGE['K'], 
-                      ions_CHARGE['HCO3'], 
-                      ions_CHARGE['CO3'], 
-                      ions_CHARGE['Cl'], 
-                      ions_CHARGE['SO4'], 
-                      1,         # Faked charge for pH
-                      1])        # Faked charge for TDS
-    tmpdf = df[['Ca', 'Mg', 'Na', 'K', 'HCO3', 'CO3', 'Cl', 'SO4', 'pH', 'TDS']]
-    dat = tmpdf.values
-
-    meqL = (dat / abs(gmol)) * abs(eqmol)
+        eqmol = np.array([ions_CHARGE['Ca'], 
+                          ions_CHARGE['Mg'], 
+                          ions_CHARGE['Na'], 
+                          ions_CHARGE['K'], 
+                          ions_CHARGE['HCO3'], 
+                          ions_CHARGE['CO3'], 
+                          ions_CHARGE['Cl'], 
+                          ions_CHARGE['SO4'], 
+                          1,         # Faked charge for pH
+                          1])        # Faked charge for TDS
+        tmpdf = df[['Ca', 'Mg', 'Na', 'K', 'HCO3', 'CO3', 'Cl', 'SO4', 'pH', 'TDS']]
+        dat = tmpdf.values
+        
+        meqL = (dat / abs(gmol)) * abs(eqmol)
+        
+    elif unit == 'meq/L':
+        meqL = df[['Ca', 'Mg', 'Na', 'K', 'HCO3', 'CO3', 'Cl', 'SO4', 'pH', 'TDS']].values
+    
+    else:
+        raise RuntimeError("""
+        Currently only mg/L and meq/L are supported.
+        Convert the unit if needed.""")
+    
+    # Calculate the percentages
     sumcat = np.sum(meqL[:, 0:4], axis=1)
     suman = np.sum(meqL[:, 4:8], axis=1)
     cat = np.zeros((dat.shape[0], 3))
@@ -281,7 +293,8 @@ Cl, SO4, pH, and TDS.
                labelspacing=0.25, handletextpad=0.25)
     
     # Display the info
-    print("Durvo plot created. Saving it now...\n")
+    cwd = os.getcwd()
+    print("Durvo diagram created. Saving it to %s \n" %cwd)
     
     # Save the figure
     plt.savefig(figname + '.' + figformat, format=figformat, 

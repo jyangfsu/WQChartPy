@@ -4,6 +4,7 @@ Created on Thu Sep 16 10:22:05 2021
 
 @author: Jing
 """
+import os
 import numpy as np
 import pandas as pd
 import matplotlib
@@ -26,7 +27,7 @@ def plot(df,
     df : class:`pandas.DataFrame`
         Geochemical data to draw Gibbs diagram.
     unit : class:`string`
-        The unit used in df. Currently only mg/L is supported. 
+        The unit used in df. Currently only mg/L and meq/L are supported. 
     figname : class:`string`
         A path or file name when saving the figure.
     figformat : class:`string`
@@ -47,37 +48,41 @@ def plot(df,
     if not {'Ca', 'Mg', 'Na', 'HCO3'}.issubset(df.columns):
         raise RuntimeError("""
         Gibbs diagram uses geochemical parameters Ca, Mg, Na, and HCO3.
-        Confirm that these parameters are provided.""")
+        Confirm that these parameters are provided in the input file.""")
         
-    # Determine if the provided unit is allowed
-    ALLOWED_UNITS = ['mg/L']
+    # Determine if the provided unit is allowed.
+    ALLOWED_UNITS = ['mg/L', 'meq/L']
     if unit not in ALLOWED_UNITS:
         raise RuntimeError("""
-        Currently only mg/L is supported.
-        Convert the unit if needed.""")
+        Currently only mg/L and meq/L are supported.
+        Convert the unit manually if needed.""")
         
-    # Convert mg/L to meq/L
-    gmol = np.array([ions_WEIGHT['Ca'], 
-                     ions_WEIGHT['Mg'], 
-                     ions_WEIGHT['Na'], 
-                     ions_WEIGHT['HCO3']])
-
-    eqmol = np.array([ions_CHARGE['Ca'], 
-                      ions_CHARGE['Mg'], 
-                      ions_CHARGE['Na'], 
-                      ions_CHARGE['HCO3']])
-
-    tmpdf = df[['Ca', 'Mg', 'Na', 'HCO3']]
-    dat = tmpdf.values
+    # Convert unit if needed
+    if unit == 'mg/L':
+        gmol = np.array([ions_WEIGHT['Ca'], 
+                         ions_WEIGHT['Mg'], 
+                         ions_WEIGHT['Na'], 
+                         ions_WEIGHT['HCO3']])
     
-    meqL = (dat / abs(gmol)) * abs(eqmol)
+        tmpdf = df[['Ca', 'Mg', 'Na', 'HCO3']]
+        dat = tmpdf.values
+        
+        molL = (dat / abs(gmol))
+        
+    elif unit == 'meq/L':
+        molL = df[['Ca', 'Mg', 'Na', 'HCO3']].values / np.abs(np.array([ions_CHARGE['Ca'], ions_CHARGE['Mg'], ions_CHARGE['Na'], ions_CHARGE['HCO3']]))
+        
+    else:
+        raise RuntimeError("""
+        Currently only mg/L and meq/L are supported.
+        Convert the unit if needed.""")
     
     # Do the plot
     # -------------------------------------------------------------------------
     fig = plt.figure(figsize=(12, 10))
     
     # Plot the scatters
-    ax1 = fig.add_subplot(221)
+    ax1 = fig.add_subplot(221, aspect='equal')
     ax1.loglog()
         
     Labels = []
@@ -89,7 +94,19 @@ def plot(df,
             Labels.append(TmpLabel)
     
         try:
-            plt.scatter(meqL[i, 0] / meqL[i, 2], meqL[i, 3] / meqL[i, 2], 
+            if (df['Color'].dtype is np.dtype('float')) or \
+                (df['Color'].dtype is np.dtype('int64')):
+                    vmin = np.min(df['Color'].values)
+                    vmax = np.max(df['Color'].values)
+                    plt.scatter(molL[i, 0] / molL[i, 2], molL[i, 3] / molL[i, 2], 
+                                marker=df.at[i, 'Marker'],
+                                s=df.at[i, 'Size'], 
+                                c=df.at[i, 'Color'], vmin=vmin, vmax=vmax,
+                                alpha=df.at[i, 'Alpha'],
+                                label=TmpLabel, 
+                                edgecolors='black')
+            else:
+                plt.scatter(molL[i, 0] / molL[i, 2], molL[i, 3] / molL[i, 2], 
                         marker=df.at[i, 'Marker'],
                         s=df.at[i, 'Size'], 
                         color=df.at[i, 'Color'], 
@@ -153,7 +170,7 @@ def plot(df,
     ax1.set_ylim(0.1, 250)
 
     # -------------------------------------------------------------------------
-    ax2 = fig.add_subplot(222)
+    ax2 = fig.add_subplot(222, aspect='equal')
     ax2.loglog()
     # Plot the scatters
     Labels = []
@@ -165,17 +182,39 @@ def plot(df,
             Labels.append(TmpLabel)
     
         try:
-            plt.scatter(meqL[i, 0] / meqL[i, 2], meqL[i, 1] / meqL[i, 2], 
-                        marker=df.at[i, 'Marker'],
-                        s=df.at[i, 'Size'], 
-                        color=df.at[i, 'Color'], 
-                        alpha=df.at[i, 'Alpha'],
-                        #label=TmpLabel, 
-                        edgecolors='black')
+            if (df['Color'].dtype is np.dtype('float')) or \
+                (df['Color'].dtype is np.dtype('int64')):
+                    vmin = np.min(df['Color'].values)
+                    vmax = np.max(df['Color'].values)
+                    cf = plt.scatter(molL[i, 0] / molL[i, 2], molL[i, 1] / molL[i, 2], 
+                                marker=df.at[i, 'Marker'],
+                                s=df.at[i, 'Size'], 
+                                c=df.at[i, 'Color'], vmin=vmin, vmax=vmax,
+                                alpha=df.at[i, 'Alpha'],
+                                #label=TmpLabel, 
+                                edgecolors='black')
+            else:
+                plt.scatter(molL[i, 0] / molL[i, 2], molL[i, 1] / molL[i, 2], 
+                            marker=df.at[i, 'Marker'],
+                            s=df.at[i, 'Size'], 
+                            color=df.at[i, 'Color'], 
+                            alpha=df.at[i, 'Alpha'],
+                            #label=TmpLabel, 
+                            edgecolors='black')
             
         except(ValueError):
             pass
         
+    # Creat the legend
+    if (df['Color'].dtype is np.dtype('float')) or (df['Color'].dtype is np.dtype('int64')):
+        cb = plt.colorbar(cf, extend='both', spacing='uniform', 
+                          orientation='vertical', fraction=0.05, pad=0.125, 
+                          )
+        #cb.set_label(label='$TDS$' + ' ' + '$(mg/L)$', size=14)
+        cb.ax.tick_params(labelsize=10)
+        cb.ax.set_ylabel('$TDS$' + ' ' + '$(mg/L)$', rotation=90, labelpad=-65, fontsize=12)
+    
+
     # Show horizontal line at 10
     ax2.axhline(y=10, linestyle=':', linewidth=1, color='k')
 
@@ -224,8 +263,10 @@ def plot(df,
     ax2.spines['right'].set_linewidth(1.25)
     ax2.spines['right'].set_color('k')
     
+    plt.subplots_adjust(wspace=0.001)
     # Display the info
-    print("Gaillardet plot created. Saving it now...\n")
+    cwd = os.getcwd()
+    print("Gaillardet plot created. Saving it to %s \n" %cwd)
    
     # Save the figure
     plt.savefig(figname + '.' + figformat, format=figformat,
@@ -254,4 +295,8 @@ if __name__ == '__main__':
             }
     df = pd.DataFrame(data)
     # df = pd.read_csv('../data/data_template.csv')
+    df.loc[df['Label']=='C1', 'Marker'] = 'o'
+    df.loc[df['Label']=='C2', 'Marker'] = 's'
+    df.loc[df['Label']=='C3', 'Marker'] = '^'
+    #df.loc[:, 'Color'] = df.loc[:, 'TDS'].values
     plot(df, unit='mg/L', figname='Gaillardet diagram', figformat='jpg')

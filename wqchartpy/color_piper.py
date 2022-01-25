@@ -16,7 +16,7 @@ from .ions import ions_WEIGHT, ions_CHARGE
 # Define the color-coded Piper plotting function
 def plot(df, 
          unit='mg/L', 
-         figname='Color coded Piper diagram', 
+         figname='color-coded Piper diagram', 
          figformat='jpg'):
     """Plot the color-coded Piper diagram.
     The original color-coded Piper diagram was proposed by Peeters (2014).
@@ -56,17 +56,19 @@ def plot(df,
     # Basic data check 
     # -------------------------------------------------------------------------
     # Determine if the required geochemical parameters are defined. 
-    if not {'Ca', 'Mg', 'Na', 'K', 'HCO3', 'CO3', 'Cl', 'SO4'}.issubset(df.columns):
+    if not {'Ca', 'Mg', 'Na', 'K', 
+            'HCO3', 'CO3', 'Cl', 'SO4'}.issubset(df.columns):
         raise RuntimeError("""
-        Piper diagram uses geochemical parameters Ca, Mg, Na, K, HCO3, CO3, Cl, and SO4.
-        Confirm that these parameters are provided.""")
+        Trilinear Piper diagram requires geochemical parameters:
+        Ca, Mg, Na, K, HCO3, CO3, Cl, and SO4.
+        Confirm that these parameters are provided in the input file.""")
         
     # Determine if the provided unit is allowed
-    ALLOWED_UNITS = ['mg/L']
+    ALLOWED_UNITS = ['mg/L', 'meq/L']
     if unit not in ALLOWED_UNITS:
         raise RuntimeError("""
-        Currently only mg/L is supported.
-        Convert the unit if needed.""")
+        Currently only mg/L and meq/L are supported.
+        Convert the unit manually if needed.""")
         
     # Basic shape of piper plot
     # -------------------------------------------------------------------------
@@ -240,30 +242,38 @@ def plot(df,
     plt.text(1.5 + offset - 0.25 + offset * np.cos(np.pi/30), h + offset * np.tan(np.pi/3) + 0.25 * np.tan(np.pi/3) + offset*np.sin(np.pi/30), '%' + '$Ca^{2+}$' + '+%' + '$Mg^{2+}$', 
               ha='center', va='center', rotation=-60, fontsize=12)
     
-    # Convert mg/L to meq/L
-    # -------------------------------------------------------------------------
-    gmol = np.array([ions_WEIGHT['Ca'], 
-                     ions_WEIGHT['Mg'], 
-                     ions_WEIGHT['Na'], 
-                     ions_WEIGHT['K'], 
-                     ions_WEIGHT['HCO3'],
-                     ions_WEIGHT['CO3'], 
-                     ions_WEIGHT['Cl'], 
-                     ions_WEIGHT['SO4']])
-
-    eqmol = np.array([ions_CHARGE['Ca'], 
-                      ions_CHARGE['Mg'], 
-                      ions_CHARGE['Na'], 
-                      ions_CHARGE['K'], 
-                      ions_CHARGE['HCO3'], 
-                      ions_CHARGE['CO3'], 
-                      ions_CHARGE['Cl'], 
-                      ions_CHARGE['SO4']])
-
-    tmpdf = df[['Ca', 'Mg', 'Na', 'K', 'HCO3', 'CO3', 'Cl', 'SO4']]
-    dat = tmpdf.values
+    # Convert unit if needed
+    if unit == 'mg/L':
+        gmol = np.array([ions_WEIGHT['Ca'], 
+                         ions_WEIGHT['Mg'], 
+                         ions_WEIGHT['Na'], 
+                         ions_WEIGHT['K'], 
+                         ions_WEIGHT['HCO3'],
+                         ions_WEIGHT['CO3'], 
+                         ions_WEIGHT['Cl'], 
+                         ions_WEIGHT['SO4']])
     
-    meqL = (dat / abs(gmol)) * abs(eqmol)
+        eqmol = np.array([ions_CHARGE['Ca'], 
+                          ions_CHARGE['Mg'], 
+                          ions_CHARGE['Na'], 
+                          ions_CHARGE['K'], 
+                          ions_CHARGE['HCO3'], 
+                          ions_CHARGE['CO3'], 
+                          ions_CHARGE['Cl'], 
+                          ions_CHARGE['SO4']])
+    
+        tmpdf = df[['Ca', 'Mg', 'Na', 'K', 'HCO3', 'CO3', 'Cl', 'SO4']]
+        dat = tmpdf.values
+        
+        meqL = (dat / abs(gmol)) * abs(eqmol)
+        
+    elif unit == 'meq/L':
+        meqL = df[['Ca', 'Mg', 'Na', 'K', 'HCO3', 'CO3', 'Cl', 'SO4']].values
+    
+    else:
+        raise RuntimeError("""
+        Currently only mg/L and meq/L are supported.
+        Convert the unit if needed.""")
     
     # Calculate the percentages
     # -------------------------------------------------------------------------
@@ -313,9 +323,11 @@ def plot(df,
     xd[yy<=h] = 2*xx[yy<=h] -1 + yy[yy<=h]/h
     yd[yy<=h] = 2*xx[yy<=h] - yy[yy<=h]/h +1
     for i,col in enumerate(['R','G','B']):
-        rgb_dic['d'][:,i] = np.clip(rgb_interp[col].ev(xd,yd),0,1)    
+        rgb_dic['d'][:,i] = np.clip(rgb_interp[col].ev(xd,yd),0,1)  
+        
     # Display the info
-    print("Color-coded Piper plot created. Saving it now...\n")
+    cwd = os.getcwd()
+    print("Color-coded Piper plot created. Saving it to %s \n" %cwd)
     
     # Save the figure
     plt.savefig(figname + '.' + figformat, format=figformat, 

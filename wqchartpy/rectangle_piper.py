@@ -5,6 +5,7 @@ Created on Wed Sep 15 14:54:43 2021
 @author: Jing
 """
 # Import modules
+import os
 import pandas as pd
 import matplotlib.pyplot as plt
 from pylab import *
@@ -40,17 +41,19 @@ def plot(df,
     # Basic data check 
     # -------------------------------------------------------------------------
     # Determine if the required geochemical parameters are defined. 
-    if not {'Ca', 'Mg', 'Na', 'K', 'HCO3', 'CO3', 'Cl', 'SO4'}.issubset(df.columns):
+    if not {'Ca', 'Mg', 'Na', 'K', 
+            'HCO3', 'CO3', 'Cl', 'SO4'}.issubset(df.columns):
         raise RuntimeError("""
-        Piper diagram uses geochemical parameters Ca, Mg, Na, K, HCO3, CO3, Cl, and SO4.
-        Confirm that these parameters are provided.""")
+        Trilinear Piper diagram requires geochemical parameters:
+        Ca, Mg, Na, K, HCO3, CO3, Cl, and SO4.
+        Confirm that these parameters are provided in the input file.""")
         
     # Determine if the provided unit is allowed
-    ALLOWED_UNITS = ['mg/L']
+    ALLOWED_UNITS = ['mg/L', 'meq/L']
     if unit not in ALLOWED_UNITS:
         raise RuntimeError("""
-        Currently only mg/L is supported.
-        Convert the unit if needed.""")
+        Currently only mg/L and meq/L are supported.
+        Convert the unit manually if needed.""")
         
     # Global plot settings
     # -------------------------------------------------------------------------
@@ -64,30 +67,38 @@ def plot(df,
     linewidth=2
     xtickpositions = linspace(0, 100, 6) # desired xtickpositions for graphs
     
-    # Convert mg/L to meq/L
-    # -------------------------------------------------------------------------
-    gmol = np.array([ions_WEIGHT['Ca'], 
-                     ions_WEIGHT['Mg'], 
-                     ions_WEIGHT['Na'], 
-                     ions_WEIGHT['K'], 
-                     ions_WEIGHT['HCO3'],
-                     ions_WEIGHT['CO3'], 
-                     ions_WEIGHT['Cl'], 
-                     ions_WEIGHT['SO4']])
-
-    eqmol = np.array([ions_CHARGE['Ca'], 
-                      ions_CHARGE['Mg'], 
-                      ions_CHARGE['Na'], 
-                      ions_CHARGE['K'], 
-                      ions_CHARGE['HCO3'], 
-                      ions_CHARGE['CO3'], 
-                      ions_CHARGE['Cl'], 
-                      ions_CHARGE['SO4']])
-
-    tmpdf = df[['Ca', 'Mg', 'Na', 'K', 'HCO3', 'CO3', 'Cl', 'SO4']]
-    dat = tmpdf.values
+    # Convert unit if needed
+    if unit == 'mg/L':
+        gmol = np.array([ions_WEIGHT['Ca'], 
+                         ions_WEIGHT['Mg'], 
+                         ions_WEIGHT['Na'], 
+                         ions_WEIGHT['K'], 
+                         ions_WEIGHT['HCO3'],
+                         ions_WEIGHT['CO3'], 
+                         ions_WEIGHT['Cl'], 
+                         ions_WEIGHT['SO4']])
     
-    meqL = (dat / abs(gmol)) * abs(eqmol)
+        eqmol = np.array([ions_CHARGE['Ca'], 
+                          ions_CHARGE['Mg'], 
+                          ions_CHARGE['Na'], 
+                          ions_CHARGE['K'], 
+                          ions_CHARGE['HCO3'], 
+                          ions_CHARGE['CO3'], 
+                          ions_CHARGE['Cl'], 
+                          ions_CHARGE['SO4']])
+    
+        tmpdf = df[['Ca', 'Mg', 'Na', 'K', 'HCO3', 'CO3', 'Cl', 'SO4']]
+        dat = tmpdf.values
+        
+        meqL = (dat / abs(gmol)) * abs(eqmol)
+        
+    elif unit == 'meq/L':
+        meqL = df[['Ca', 'Mg', 'Na', 'K', 'HCO3', 'CO3', 'Cl', 'SO4']].values
+    
+    else:
+        raise RuntimeError("""
+        Currently only mg/L and meq/L are supported.
+        Convert the unit if needed.""")
     
     # Calculate the percentages
     # -------------------------------------------------------------------------
@@ -128,13 +139,25 @@ def plot(df,
             Labels.append(TmpLabel)
     
         try:
-            plt.scatter(100 * cat[i, 0], 100 * cat[i, 1], 
-                        marker=df.at[i, 'Marker'],
-                        s=df.at[i, 'Size'], 
-                        color=df.at[i, 'Color'], 
-                        alpha=df.at[i, 'Alpha'],
-                        label=TmpLabel, 
-                        edgecolors='black')
+            if (df['Color'].dtype is np.dtype('float')) or \
+                (df['Color'].dtype is np.dtype('int64')):
+                vmin = np.min(df['Color'].values)
+                vmax = np.max(df['Color'].values)
+                plt.scatter(100 * cat[i, 0], 100 * cat[i, 1], 
+                            marker=df.at[i, 'Marker'],
+                            s=df.at[i, 'Size'], 
+                            c=df.at[i, 'Color'], vmin=vmin, vmax=vmax,
+                            alpha=df.at[i, 'Alpha'],
+                            label=TmpLabel, 
+                            edgecolors='black')
+            else:
+                plt.scatter(100 * cat[i, 0], 100 * cat[i, 1], 
+                            marker=df.at[i, 'Marker'],
+                            s=df.at[i, 'Size'], 
+                            color=df.at[i, 'Color'], 
+                            alpha=df.at[i, 'Alpha'],
+                            label=TmpLabel, 
+                            edgecolors='black')
         except(ValueError):
                 pass
             
@@ -179,13 +202,26 @@ def plot(df,
             Labels.append(TmpLabel)
     
         try:
-            plt.scatter(100 * an[i, 2], 100 * an[i, 1], 
-                        marker=df.at[i, 'Marker'],
-                        s=df.at[i, 'Size'], 
-                        color=df.at[i, 'Color'], 
-                        alpha=df.at[i, 'Alpha'],
-                        #label=TmpLabel, 
-                        edgecolors='black')
+            if (df['Color'].dtype is np.dtype('float')) or \
+                (df['Color'].dtype is np.dtype('int64')):
+                vmin = np.min(df['Color'].values)
+                vmax = np.max(df['Color'].values)
+                plt.scatter(100 * an[i, 2], 100 * an[i, 1], 
+                            marker=df.at[i, 'Marker'],
+                            s=df.at[i, 'Size'], 
+                            c=df.at[i, 'Color'], vmin=vmin, vmax=vmax,
+                            alpha=df.at[i, 'Alpha'],
+                            #label=TmpLabel, 
+                            edgecolors='black')
+                
+            else:
+                plt.scatter(100 * an[i, 2], 100 * an[i, 1], 
+                            marker=df.at[i, 'Marker'],
+                            s=df.at[i, 'Size'], 
+                            color=df.at[i, 'Color'], 
+                            alpha=df.at[i, 'Alpha'],
+                            #label=TmpLabel, 
+                            edgecolors='black')
         except(ValueError):
                 pass
             
@@ -198,6 +234,7 @@ def plot(df,
                    size=12, weight='normal')
     #ax3.set_xlabel('Cl (% meq) ->')
     #ax3.set_ylabel('SO4 (% meq) ->')
+    
     
     # CATIONS AND ANIONS COMBINED IN DIAMOND SHAPE PLOT
     # -------------------------------------------------------------------------
@@ -222,13 +259,27 @@ def plot(df,
             Labels.append(TmpLabel)
     
         try:
-            ax2.scatter(100 * cat[i, 2], 100 * (an[i, 1] + an[i, 2]), 
-                        marker=df.at[i, 'Marker'],
-                        s=df.at[i, 'Size'], 
-                        color=df.at[i, 'Color'], 
-                        alpha=df.at[i, 'Alpha'],
-                        #label=TmpLabel, 
-                        edgecolors='black')
+            if (df['Color'].dtype is np.dtype('float')) or \
+                (df['Color'].dtype is np.dtype('int64')):
+                vmin = np.min(df['Color'].values)
+                vmax = np.max(df['Color'].values)
+                cf = ax2.scatter(100 * cat[i, 2], 100 * (an[i, 1] + an[i, 2]), 
+                            marker=df.at[i, 'Marker'],
+                            s=df.at[i, 'Size'], 
+                            c=df.at[i, 'Color'], vmin=vmin, vmax=vmax,
+                            alpha=df.at[i, 'Alpha'],
+                            #label=TmpLabel, 
+                            edgecolors='black') 
+            else:
+                ax2.scatter(100 * cat[i, 2], 100 * (an[i, 1] + an[i, 2]), 
+                            marker=df.at[i, 'Marker'],
+                            s=df.at[i, 'Size'], 
+                            color=df.at[i, 'Color'], 
+                            alpha=df.at[i, 'Alpha'],
+                            #label=TmpLabel, 
+                            edgecolors='black')
+    
+                
         except(ValueError):
                 pass
             
@@ -258,7 +309,8 @@ def plot(df,
                     wspace=0.4, hspace=0.0)
     
     # Display the info
-    print("Rectangle Piper plot created. Saving it now...\n")
+    cwd = os.getcwd()
+    print("Rectangle Piper plot created. Saving it to %s \n" %cwd)
     
     # Save the figure
     plt.savefig(figname + '.' + figformat, format=figformat, 
@@ -287,6 +339,10 @@ if __name__ == '__main__':
             }
     df = pd.DataFrame(data)
     # df = pd.read_csv('../data/data_template.csv')
+    df.loc[df['Label']=='C1', 'Marker'] = 'o'
+    df.loc[df['Label']=='C2', 'Marker'] = 's'
+    df.loc[df['Label']=='C3', 'Marker'] = '^'
+    df.loc[:, 'Color'] = df.loc[:, 'TDS'].values
     plot(df, unit='mg/L', figname='rectangle Piper diagram', figformat='jpg')
     
     

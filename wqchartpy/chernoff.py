@@ -4,6 +4,7 @@ Created on Fri Sep 17 14:33:20 2021
 
 @author: Jing
 """
+import os
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -47,33 +48,41 @@ def plot(df,
         Confirm that these parameters are provided.""")
         
     # Determine if the provided unit is allowed
-    ALLOWED_UNITS = ['mg/L']
+    ALLOWED_UNITS = ['mg/L', 'meq/L']
     if unit not in ALLOWED_UNITS:
         raise RuntimeError("""
-        Currently only mg/L is supported.
-        Convert the unit if needed.""")
+        Currently only mg/L and meq/L are supported.
+        Convert the unit manually if needed.""")
         
-    # Convert mg/L to meq/L
-    gmol = np.array([ions_WEIGHT['Ca'], 
-                     ions_WEIGHT['Mg'], 
-                     ions_WEIGHT['Na'], 
-                     ions_WEIGHT['K'], 
-                     ions_WEIGHT['HCO3'],
-                     ions_WEIGHT['Cl'], 
-                     ions_WEIGHT['SO4']])
-
-    eqmol = np.array([ions_CHARGE['Ca'], 
-                      ions_CHARGE['Mg'], 
-                      ions_CHARGE['Na'], 
-                      ions_CHARGE['K'], 
-                      ions_CHARGE['HCO3'],  
-                      ions_CHARGE['Cl'], 
-                      ions_CHARGE['SO4']])
-
-    tmpdf = df[['Ca', 'Mg', 'Na', 'K', 'HCO3', 'Cl', 'SO4']]
-    dat = tmpdf.values
+    # Convert unit if needed
+    if unit == 'mg/L':
+        gmol = np.array([ions_WEIGHT['Ca'], 
+                         ions_WEIGHT['Mg'], 
+                         ions_WEIGHT['Na'], 
+                         ions_WEIGHT['K'], 
+                         ions_WEIGHT['HCO3'],
+                         ions_WEIGHT['Cl'], 
+                         ions_WEIGHT['SO4']])
     
-    meqL = (dat / abs(gmol)) * abs(eqmol)
+        eqmol = np.array([ions_CHARGE['Ca'], 
+                          ions_CHARGE['Mg'], 
+                          ions_CHARGE['Na'], 
+                          ions_CHARGE['K'], 
+                          ions_CHARGE['HCO3'],  
+                          ions_CHARGE['Cl'], 
+                          ions_CHARGE['SO4']])
+    
+        tmpdf = df[['Ca', 'Mg', 'Na', 'K', 'HCO3', 'Cl', 'SO4']]
+        dat = tmpdf.values
+        
+        meqL = (dat / abs(gmol)) * abs(eqmol)
+    elif unit == 'meq/L':
+        meqL = df[['Ca', 'Mg', 'Na', 'K', 'HCO3', 'Cl', 'SO4']].values
+        
+    else:
+        raise RuntimeError("""
+        Currently only mg/L and meq/L are supported.
+        Convert the unit if needed.""")
     
     # Calculate the percentages
     sumcat = np.sum(meqL[:, 0:4], axis=1)
@@ -194,6 +203,7 @@ def plot(df,
             ax.plot([x11+x14/2+x14*x18/2,x11+x14/2-x14*x18/2],
                     [x10+x13*x14*(x16+x17),x10+x13*x14*(x16-x17)],'k')
             
+            
             # Show the lables
             ax.text(1.3, 1.2, 'Explanation', ha='left', va='top', fontsize=12)
             ax.text(1.3, 0.9, 'Width of upper face = Mg$^{2+}$', ha='left', va='top', fontsize=12)
@@ -203,15 +213,19 @@ def plot(df,
             ax.text(1.3, -0.3, 'Length of mouth = HCO' + '$_3^-$', ha='left', va='top', fontsize=12)
             ax.text(1.3, -0.6, 'Size of eyes = Cl$^-$', ha='left', va='top', fontsize=12)
             
+            
             ax.axis([-1.2, 1.2, -1.2, 1.2])
             ax.set_xticks([])
             ax.set_yticks([])
+            
+            ax.set_title(df.at[i, 'Sample'], fontsize=14, weight='normal')
     
         except(ValueError):
             pass
         
         # Display the info
-        print("Chernoff face created for %s. Saving it now...\n" %str(df.at[i, 'Sample']))
+        cwd = os.getcwd()
+        print("Chernoff face created for %s. Saving it to %s\n" %(str(df.at[i, 'Sample']), cwd))
     
     
         # Save the figure
@@ -239,6 +253,7 @@ if __name__ == '__main__':
             'SO4'    : [48, 9, 10, 9, 9, 100],
             'TDS'    : [233, 299, 377, 360, 424, 673],
             }
+    
     df = pd.DataFrame(data)
     # df = pd.read_csv('../data/data_template.csv')
     plot(df, unit='mg/L', figname='Chernoff face', figformat='jpg')

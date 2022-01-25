@@ -4,12 +4,13 @@ Created on Wed Sep 15 14:34:07 2021
 
 @author: Jing
 """
+import os
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib as mpl
 
-from .ions import ions_WEIGHT, ions_CHARGE
+from ions import ions_WEIGHT, ions_CHARGE
 
 # Define the plotting function
 def plot(df, 
@@ -23,40 +24,44 @@ def plot(df,
     df : class:`pandas.DataFrame`
         Geochemical data to draw Gibbs diagram.
     unit : class:`string`
-        The unit used in df. Currently only mg/L is supported. 
+        The unit used in df. Currently only mg/L and meq/L are supported. 
     figname : class:`string`
         A path or file name when saving the figure.
     figformat : class:`string`
-        The file format, e.g. 'png', 'pdf', 'svg'
+        The figure format to be saved, e.g. 'png', 'pdf', 'svg'
         
         
     References
     ----------
     .. [1] Piper, A.M. 1944.
-           A Graphic Procedure in the Geochemical Interpretation of Water-Analyses.
-           Eos, Transactions American Geophysical Union, 25, 914-928.
+           A Graphic Procedure in the Geochemical Interpretation of 
+           Water-Analyses. Eos, Transactions American Geophysical 
+           Union, 25, 914-928.
            http://dx.doi.org/10.1029/TR025i006p00914
+    .. [2] Hill, R.A. 1944. 
+           Discussion of a graphic procedure in the geochemical interpretation 
+           of water analyses. EOS, Transactions American Geophysical 
+           Union 25, no. 6: 914–928.    
     """
     # Basic data check 
     # -------------------------------------------------------------------------
     # Determine if the required geochemical parameters are defined. 
-    if not {'Ca', 'Mg', 'Na', 'K', 'HCO3', 'CO3', 'Cl', 'SO4'}.issubset(df.columns):
+    if not {'Ca', 'Mg', 'Na', 'K', 
+            'HCO3', 'CO3', 'Cl', 'SO4'}.issubset(df.columns):
         raise RuntimeError("""
-        Piper trilinear diagram uses geochemical parameters Ca, Mg, Na, K, HCO3, CO3, Cl, and SO4.
-        Confirm that these parameters are provided.""")
+        Trilinear Piper diagram requires geochemical parameters:
+        Ca, Mg, Na, K, HCO3, CO3, Cl, and SO4.
+        Confirm that these parameters are provided in the input file.""")
         
     # Determine if the provided unit is allowed
-    ALLOWED_UNITS = ['mg/L']
+    ALLOWED_UNITS = ['mg/L', 'meq/L']
     if unit not in ALLOWED_UNITS:
         raise RuntimeError("""
-        Currently only mg/L is supported.
-        Convert the unit if needed.""")
+        Currently only mg/L and meq/L are supported.
+        Convert the unit manually if needed.""")
         
     # Global plot settings
     # -------------------------------------------------------------------------
-    # mpl.rcParams['lines.linewidth'] = 1
-    mpl.rcParams['lines.markersize'] = 6
-    
     # Change default settings for figures
     plt.style.use('default')
     plt.rcParams['font.size'] = 10
@@ -71,7 +76,7 @@ def plot(df,
     # Plot background settings
     # -------------------------------------------------------------------------
     # Define the offset between the diamond and traingle
-    offset = 0.10 
+    offset = 0.10                         
     offsety = offset * np.tan(np.pi / 3.0)
     h = 0.5 * np.tan(np.pi / 3.0)
     
@@ -86,13 +91,14 @@ def plot(df,
     diamond_y = h * (np.array([1, 2, 1, 0, 1])) + (offset * np.tan(np.pi / 3))
     
     # Plot the traingles and diamond
-    fig = plt.figure(figsize=(10,10), dpi=100)
-    ax = fig.add_subplot(111, aspect='equal', frameon=False, xticks=[], yticks=[])
+    fig = plt.figure(figsize=(10, 10), dpi=100)
+    ax = fig.add_subplot(111, aspect='equal', frameon=False, 
+                         xticks=[], yticks=[])
     ax.plot(ltriangle_x, ltriangle_y, '-k', lw=1.0)
     ax.plot(rtriangle_x, rtriangle_y, '-k', lw=1.0)
     ax.plot(diamond_x, diamond_y, '-k', lw=1.0)
     
-    # Plot the lines with the interval of 20%
+    # Plot the lines with interval of 20%
     interval = 0.2
     ticklabels = ['0', '20', '40', '60', '80', '100']
     for i, x in enumerate(np.linspace(0, 1, int(1/interval+1))):
@@ -109,14 +115,15 @@ def plot(df,
                  'k:', lw=1.0)
         ## the right ticks
         if i in [1, 2, 3, 4]:
-            ax.text((1-x)/2.0+x + 0.026, (1-x)/2.0*np.tan(np.pi/3) + 0.015, ticklabels[i], ha='center', va='center', rotation=-60)
+            ax.text((1-x)/2.0+x + 0.026, (1-x)/2.0*np.tan(np.pi/3) + 0.015, 
+                    ticklabels[i], ha='center', va='center', rotation=-60)
         ax.plot([x/2, 1-x/2], 
                 [x/2*np.tan(np.pi/3), x/2*np.tan(np.pi/3)], 
                 'k:', lw=1.0)
         ## the left ticks
         if i in [1, 2, 3, 4]:
-            ax.text(x/2 - 0.026, x/2*np.tan(np.pi/3) + 0.015, ticklabels[i], 
-                    ha='center', va='center', rotation=60)
+            ax.text(x/2 - 0.026, x/2*np.tan(np.pi/3) + 0.015, 
+                    ticklabels[i], ha='center', va='center', rotation=60)
         
         # the right traingle
         ax.plot([x+1+2*offset, x-x/2.0+1+2*offset], 
@@ -124,22 +131,22 @@ def plot(df,
                 'k:', lw=1.0)
         ## the bottom ticks
         if i in [1, 2, 3, 4]:
-            ax.text(x+1+2*offset, 0-0.03, ticklabels[i], 
-                    ha='center', va='center')
+            ax.text(x+1+2*offset, 0-0.03, 
+                    ticklabels[i], ha='center', va='center')
         ax.plot([x+1+2*offset, (1-x)/2.0+x+1+2*offset],
                  [0, (1-x)/2.0*np.tan(np.pi/3)], 
                  'k:', lw=1.0)
         ## the right ticks
         if i in [1, 2, 3, 4]:
-            ax.text((1-x)/2.0+x+1+2*offset  + 0.026, (1-x)/2.0*np.tan(np.pi/3) + 0.015, ticklabels[-i-1], 
-                    ha='center', va='center', rotation=-60)
+            ax.text((1-x)/2.0+x+1+2*offset  + 0.026, (1-x)/2.0*np.tan(np.pi/3) + 0.015, 
+                    ticklabels[-i-1], ha='center', va='center', rotation=-60)
         ax.plot([x/2+1+2*offset, 1-x/2+1+2*offset], 
                 [x/2*np.tan(np.pi/3), x/2*np.tan(np.pi/3)], 
                 'k:', lw=1.0)
         ## the left ticks
         if i in [1, 2, 3, 4]:
-            ax.text(x/2+1+2*offset - 0.026, x/2*np.tan(np.pi/3) + 0.015, ticklabels[-i-1], 
-                    ha='center', va='center', rotation=60)
+            ax.text(x/2+1+2*offset - 0.026, x/2*np.tan(np.pi/3) + 0.015, 
+                    ticklabels[-i-1], ha='center', va='center', rotation=60)
         
         # the diamond
         ax.plot([0.5+offset+0.5/(1/interval)*x/interval, 1+offset+0.5/(1/interval)*x/interval], 
@@ -195,29 +202,38 @@ def plot(df,
              [h+offset*np.tan(np.pi/3) + 0.5*np.sin(np.pi/3), h+offset*np.tan(np.pi/3), h+offset*np.tan(np.pi/3) + 0.5*np.sin(np.pi/3), h+offset*np.tan(np.pi/3) + 0.5*np.sin(np.pi/3)], 
              color = (0.8, 0.8, 0.8), zorder=0)
     
-    # Convert mg/L to meq/L
-    gmol = np.array([ions_WEIGHT['Ca'], 
-                     ions_WEIGHT['Mg'], 
-                     ions_WEIGHT['Na'], 
-                     ions_WEIGHT['K'], 
-                     ions_WEIGHT['HCO3'],
-                     ions_WEIGHT['CO3'], 
-                     ions_WEIGHT['Cl'], 
-                     ions_WEIGHT['SO4']])
-
-    eqmol = np.array([ions_CHARGE['Ca'], 
-                      ions_CHARGE['Mg'], 
-                      ions_CHARGE['Na'], 
-                      ions_CHARGE['K'], 
-                      ions_CHARGE['HCO3'], 
-                      ions_CHARGE['CO3'], 
-                      ions_CHARGE['Cl'], 
-                      ions_CHARGE['SO4']])
-
-    tmpdf = df[['Ca', 'Mg', 'Na', 'K', 'HCO3', 'CO3', 'Cl', 'SO4']]
-    dat = tmpdf.values
+    # Convert unit if needed
+    if unit == 'mg/L':
+        gmol = np.array([ions_WEIGHT['Ca'], 
+                         ions_WEIGHT['Mg'], 
+                         ions_WEIGHT['Na'], 
+                         ions_WEIGHT['K'], 
+                         ions_WEIGHT['HCO3'],
+                         ions_WEIGHT['CO3'], 
+                         ions_WEIGHT['Cl'], 
+                         ions_WEIGHT['SO4']])
     
-    meqL = (dat / abs(gmol)) * abs(eqmol)
+        eqmol = np.array([ions_CHARGE['Ca'], 
+                          ions_CHARGE['Mg'], 
+                          ions_CHARGE['Na'], 
+                          ions_CHARGE['K'], 
+                          ions_CHARGE['HCO3'], 
+                          ions_CHARGE['CO3'], 
+                          ions_CHARGE['Cl'], 
+                          ions_CHARGE['SO4']])
+    
+        tmpdf = df[['Ca', 'Mg', 'Na', 'K', 'HCO3', 'CO3', 'Cl', 'SO4']]
+        dat = tmpdf.values
+        
+        meqL = (dat / abs(gmol)) * abs(eqmol)
+        
+    elif unit == 'meq/L':
+        meqL = df[['Ca', 'Mg', 'Na', 'K', 'HCO3', 'CO3', 'Cl', 'SO4']].values
+    
+    else:
+        raise RuntimeError("""
+        Currently only mg/L and meq/L are supported.
+        Convert the unit if needed.""")
     
     # Calculate the percentages
     sumcat = np.sum(meqL[:, 0:4], axis=1)
@@ -247,39 +263,73 @@ def plot(df,
         else:
             TmpLabel = df.at[i, 'Label']
             Labels.append(TmpLabel)
-    
+         
         try:
-            plt.scatter(cat_x[i], cat_y[i], 
-                        marker=df.at[i, 'Marker'],
-                        s=df.at[i, 'Size'], 
-                        color=df.at[i, 'Color'], 
-                        alpha=df.at[i, 'Alpha'],
-                        #label=TmpLabel, 
-                        edgecolors='black')
-            plt.scatter(an_x[i], an_y[i], 
-                        marker=df.at[i, 'Marker'],
-                        s=df.at[i, 'Size'], 
-                        color=df.at[i, 'Color'], 
-                        alpha=df.at[i, 'Alpha'],
-                        label=TmpLabel, 
-                        edgecolors='black')
-            plt.scatter(d_x[i], d_y[i], 
-                        marker=df.at[i, 'Marker'],
-                        s=df.at[i, 'Size'], 
-                        color=df.at[i, 'Color'], 
-                        alpha=df.at[i, 'Alpha'],
-                        #label=TmpLabel, 
-                        edgecolors='black')
+            if (df['Color'].dtype is np.dtype('float')) or \
+                (df['Color'].dtype is np.dtype('int64')):
+                vmin = np.min(df['Color'].values)
+                vmax = np.max(df['Color'].values)
+                cf = plt.scatter(cat_x[i], cat_y[i], 
+                                marker=df.at[i, 'Marker'],
+                                s=df.at[i, 'Size'], 
+                                c=df.at[i, 'Color'], vmin=vmin, vmax=vmax,
+                                alpha=df.at[i, 'Alpha'],
+                                #label=TmpLabel, 
+                                edgecolors='black')
+                plt.scatter(an_x[i], an_y[i], 
+                            marker=df.at[i, 'Marker'],
+                            s=df.at[i, 'Size'], 
+                            c=df.at[i, 'Color'], vmin=vmin, vmax=vmax,
+                            alpha=df.at[i, 'Alpha'],
+                            label=TmpLabel, 
+                            edgecolors='black')
+                plt.scatter(d_x[i], d_y[i], 
+                            marker=df.at[i, 'Marker'],
+                            s=df.at[i, 'Size'], 
+                            c=df.at[i, 'Color'], vmin=vmin, vmax=vmax,
+                            alpha=df.at[i, 'Alpha'],
+                            #label=TmpLabel, 
+                            edgecolors='black')
+                
+            else:
+                plt.scatter(cat_x[i], cat_y[i], 
+                            marker=df.at[i, 'Marker'],
+                            s=df.at[i, 'Size'], 
+                            c=df.at[i, 'Color'], 
+                            alpha=df.at[i, 'Alpha'],
+                            #label=TmpLabel, 
+                            edgecolors='black')
+                plt.scatter(an_x[i], an_y[i], 
+                            marker=df.at[i, 'Marker'],
+                            s=df.at[i, 'Size'], 
+                            c=df.at[i, 'Color'], 
+                            alpha=df.at[i, 'Alpha'],
+                            label=TmpLabel, 
+                            edgecolors='black')
+                plt.scatter(d_x[i], d_y[i], 
+                            marker=df.at[i, 'Marker'],
+                            s=df.at[i, 'Size'], 
+                            c=df.at[i, 'Color'], 
+                            alpha=df.at[i, 'Alpha'],
+                            #label=TmpLabel, 
+                            edgecolors='black')
+                
         except(ValueError):
-                pass
+            pass
             
     # Creat the legend
+    if (df['Color'].dtype is np.dtype('float')) or (df['Color'].dtype is np.dtype('int64')):
+        cb = plt.colorbar(cf, extend='both', spacing='uniform',
+                          orientation='vertical', fraction=0.025, pad=0.05)
+        cb.ax.set_ylabel('$TDS$' + ' ' + '$(mg/L)$', rotation=90, labelpad=-75, fontsize=14)
+    
     plt.legend(bbox_to_anchor=(0.15, 0.875), markerscale=1, fontsize=12,
                frameon=False, 
                labelspacing=0.25, handletextpad=0.25)
     
     # Display the info
-    print("Piper trilinear plot created. Saving it now...\n")
+    cwd = os.getcwd()
+    print("Trilinear Piper plot created. Saving it to %s \n" %cwd)
     
     # Save the figure
     plt.savefig(figname + '.' + figformat, format=figformat, 
@@ -304,12 +354,15 @@ if __name__ == '__main__':
             'CO3'    : [0, 0, 0, 0, 0, 0],
             'Cl'     : [43, 14, 18, 18, 11, 96],
             'SO4'    : [48, 9, 10, 9, 9, 100],
-            'TDS'    : [233, 299, 377, 360, 424, 673],
+            'TDS'    : [233, 299, 377, 360, 424, 673], 
             }
     df = pd.DataFrame(data)
     # df = pd.read_csv('../data/data_template.csv')
+    # df = pd.read_csv('../data/Moreno_Merino _2021_Fig2b_dataset.csv')
+    # df.loc[df['Label']=='C1', 'Marker'] = 'o'
+    # df.loc[df['Label']=='C2', 'Marker'] = 's'
+    # df.loc[df['Label']=='C3', 'Marker'] = '^'
+    # df.loc[:, 'Color'] = df.loc[:, 'TDS'].values
     plot(df, unit='mg/L', figname='triangle Piper diagram', figformat='jpg')
-    
-    
     
     

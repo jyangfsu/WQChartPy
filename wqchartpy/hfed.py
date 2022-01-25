@@ -4,7 +4,7 @@ Created on Sun Sep  6 10:36:15 2020
 
 @author: Jing
 """
-
+import os
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -23,7 +23,7 @@ def plot(df,
     df : class:`pandas.DataFrame`
         Geochemical data to draw HFE-D diagram.
     unit : class:`string`
-        The unit used in df. Currently only mg/L is supported. 
+        The unit used in df. Currently only mg/L and meq/L are supported. 
     figname : class:`string`
         A path or file name when saving the figure.
     figformat : class:`string`
@@ -41,14 +41,15 @@ def plot(df,
     if not {'Ca', 'Mg', 'Na', 'K', 'HCO3', 'CO3', 'Cl', 'SO4'}.issubset(df.columns):
         raise RuntimeError("""
         HFE-D uses geochemical parameters Ca, Mg, Na, K, HCO3, CO3, Cl, and SO4.
-        Confirm that these parameters are provided.""")
+        Confirm that these parameters are provided in the input file.""")
         
     # Determine if the provided unit is allowed.
-    ALLOWED_UNITS = ['mg/L']
+    ALLOWED_UNITS = ['mg/L', 'meq/L']
     if unit not in ALLOWED_UNITS:
         raise RuntimeError("""
-        Currently only mg/L is supported.
-        Convert the unit if needed.""")
+        Currently only mg/L and meq/L are supported.
+        Convert the unit manually if needed.""")
+        
     '''
     # Seawater concentrations from Turekian, K.K. ,1968.- Oceans , Prentice Hall
     CONC_SWAWATER = {'Ca': 411,
@@ -73,7 +74,7 @@ def plot(df,
     
     # Axis settings
     left, bottom, width, height = 0.1, 0.1, 0.8, 0.8
-    ax = fig.add_axes([left, bottom, width, height])
+    ax = fig.add_axes([left, bottom, width, height], aspect='equal')
     
     # Figure border
     ax.spines['top'].set_linewidth(1.5)
@@ -279,28 +280,37 @@ def plot(df,
              ha='left', va='center', fontsize=14)
     
     # Convert mg/L to meq/L
-    gmol = np.array([ions_WEIGHT['Ca'], 
-                     ions_WEIGHT['Mg'], 
-                     ions_WEIGHT['Na'], 
-                     ions_WEIGHT['K'], 
-                     ions_WEIGHT['HCO3'],
-                     ions_WEIGHT['CO3'], 
-                     ions_WEIGHT['Cl'], 
-                     ions_WEIGHT['SO4']])
-
-    eqmol = np.array([ions_CHARGE['Ca'], 
-                      ions_CHARGE['Mg'], 
-                      ions_CHARGE['Na'], 
-                      ions_CHARGE['K'], 
-                      ions_CHARGE['HCO3'], 
-                      ions_CHARGE['CO3'], 
-                      ions_CHARGE['Cl'], 
-                      ions_CHARGE['SO4']])
-
-    tmpdf = df[['Ca', 'Mg', 'Na', 'K', 'HCO3', 'CO3', 'Cl', 'SO4']]
-    dat = tmpdf.values
+    if unit == 'mg/L':
+        gmol = np.array([ions_WEIGHT['Ca'], 
+                         ions_WEIGHT['Mg'], 
+                         ions_WEIGHT['Na'], 
+                         ions_WEIGHT['K'], 
+                         ions_WEIGHT['HCO3'],
+                         ions_WEIGHT['CO3'], 
+                         ions_WEIGHT['Cl'], 
+                         ions_WEIGHT['SO4']])
     
-    meqL = (dat / abs(gmol)) * abs(eqmol)
+        eqmol = np.array([ions_CHARGE['Ca'], 
+                          ions_CHARGE['Mg'], 
+                          ions_CHARGE['Na'], 
+                          ions_CHARGE['K'], 
+                          ions_CHARGE['HCO3'], 
+                          ions_CHARGE['CO3'], 
+                          ions_CHARGE['Cl'], 
+                          ions_CHARGE['SO4']])
+    
+        tmpdf = df[['Ca', 'Mg', 'Na', 'K', 'HCO3', 'CO3', 'Cl', 'SO4']]
+        dat = tmpdf.values
+        
+        meqL = (dat / abs(gmol)) * abs(eqmol)
+    
+    elif unit == 'meq/L':
+        meqL = df[['Ca', 'Mg', 'Na', 'K', 'HCO3', 'CO3', 'Cl', 'SO4']].values
+        
+    else:
+        raise RuntimeError("""
+        Currently only mg/L and meq/L are supported.
+        Convert the unit if needed.""")
     
     # Calculate the percentages
     sumcat = np.sum(meqL[:, 0:4], axis=1)
@@ -330,13 +340,29 @@ def plot(df,
             Labels.append(TmpLabel)
     
         try:
-            plt.scatter(x[i], y[i], 
+            if (df['Color'].dtype is np.dtype('float')) or \
+                (df['Color'].dtype is np.dtype('int64')):
+                    vmin = np.min(df['Color'].values)
+                    vmax = np.max(df['Color'].values)
+        
+                    cf = plt.scatter(x[i], y[i], 
+                                marker=df.at[i, 'Marker'],
+                                s=df.at[i, 'Size'], 
+                                c=df.at[i, 'Color'], vmin=vmin, vmax=vmax,
+                                alpha=df.at[i, 'Alpha'],
+                                label=TmpLabel, 
+                                edgecolors='black')
+                
+            else:
+                 plt.scatter(x[i], y[i], 
                         marker=df.at[i, 'Marker'],
                         s=df.at[i, 'Size'], 
                         color=df.at[i, 'Color'], 
                         alpha=df.at[i, 'Alpha'],
                         label=TmpLabel, 
                         edgecolors='black')
+            
+
         except(ValueError):
                 pass
             
@@ -376,11 +402,19 @@ def plot(df,
              fontsize=14, ha='left', va='center')
 
     # Creat the legend
+    if (df['Color'].dtype is np.dtype('float')) or (df['Color'].dtype is np.dtype('int64')):
+        cb = plt.colorbar(cf, extend='both', spacing='uniform', shrink=0.5,
+                          orientation='horizontal', fraction=0.05, pad=0.025, 
+                          )
+        cb.set_label(label='$TDS$' + ' ' + '$(mg/L)$', size=14)
+        #cb.ax.set_ylabel('$TDS$' + ' ' + '$(mg/L)$', rotation=75, labelpad=0, fontsize=14)
+    
     plt.legend(bbox_to_anchor=(0.15, 0.875), markerscale=1, frameon=False, 
                labelspacing=0.25, handletextpad=0.25)
     
     # Display the info
-    print("HFE-D plot created. Saving it now...\n")
+    cwd = os.getcwd()
+    print("HFE-D plot created. Saving it to %s \n" %cwd)
     
     # Save the figure
     plt.savefig(figname + '.' + figformat, format=figformat, 
@@ -409,6 +443,10 @@ if __name__ == '__main__':
             }
     df = pd.DataFrame(data)
     # df = pd.read_csv('../data/data_template.csv')
+    df.loc[df['Label']=='C1', 'Marker'] = 'o'
+    df.loc[df['Label']=='C2', 'Marker'] = 's'
+    df.loc[df['Label']=='C3', 'Marker'] = '^'
+    df.loc[:, 'Color'] = df.loc[:, 'TDS'].values
     plot(df, unit='mg/L', figname='HFE-D', figformat='jpg')
     
     
