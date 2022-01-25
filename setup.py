@@ -29,7 +29,7 @@ DISTNAME = 'wqchartpy'
 MAINTAINER = 'Jing Yang'
 MAINTAINER_EMAIL = 'jingyang@cug.edu.cn'
 LICENSE = 'GNU General Public License v3.0'
-VERSION = '0.1.3'
+VERSION = '0.1.8'
 PYTHON_REQUIRES = ">=3.7"
 
 INSTALL_REQUIRES = [
@@ -37,6 +37,7 @@ INSTALL_REQUIRES = [
     'pandas>=1.0.3',
     'matplotlib>=3.3.4'
     'scipy>=1.6.2',
+    'scikit-learn>=0.23.1',
     ]
 
 if __name__ == "__main__":
