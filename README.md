@@ -78,6 +78,7 @@ Another way is to manually install WQChartPy with `setup.py`. Preliminary steps 
 - [Pandas](https://pandas.pydata.org/)
 - [Matplotlib](https://www.scipy.org/scipylib)
 - [SciPy](https://salib.readthedocs.io/en/latest/)
+- [Scikit-learn](https://scikit-learn.org/stable/index.html)
     
 ## How to use
 
