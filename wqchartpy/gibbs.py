@@ -228,11 +228,11 @@ def plot(df,
     ax1.spines['right'].set_color('k')
 
     ax1.text(0.775, 5, 'Rainfall', fontname='Times New Roman', ha='left',
-             fontsize=14, family='fantasy')
+             fontsize=14, family='cursive')
     ax1.text(0.025, 155, 'Rock \nDominancy', va='center',
-             fontname='Times New Roman', fontsize=14, family='fantasy')
+             fontname='Times New Roman', fontsize=14, family='cursive')
     ax1.text(0.725, 10000,'Seawater', fontname='Times New Roman', ha='left',
-             fontsize=14, family='fantasy')
+             fontsize=14, family='cursive')
     
     ax1.set_xlabel('Na$^+$/(Na$^+$+Ca$^{2+}$)', weight='normal',
                fontsize=12)
@@ -290,11 +290,11 @@ def plot(df,
     ax2.spines['right'].set_color('k')
     
     ax2.text(0.76, 8.5,'Rainfall', fontname='Times New Roman',
-             fontsize=14, family='fantasy')
+             fontsize=14, family='cursive')
     ax2.text(0.025, 155, 'Rock \nDominancy', va='center',
-             fontname='Times New Roman', fontsize=14, family='fantasy')
+             fontname='Times New Roman', fontsize=14, family='cursive')
     ax2.text(0.72, 7000,'Seawater', fontname='Times New Roman',
-             fontsize=14, family='fantasy')
+             fontsize=14, family='cursive')
     
     ax2.set_xlabel('Cl$^-$/(Cl$^-$+HCO$_3^-$)', 
                    weight='normal', fontsize=12)

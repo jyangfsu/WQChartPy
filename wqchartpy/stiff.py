@@ -12,7 +12,7 @@ from matplotlib.ticker import MaxNLocator
 import matplotlib as mpl
 from pylab import *
 
-from ions import ions_WEIGHT, ions_CHARGE
+from .ions import ions_WEIGHT, ions_CHARGE
 
 # Define the plotting function
 def plot(df, 

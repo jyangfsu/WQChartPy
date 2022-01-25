@@ -171,7 +171,7 @@ Cl, SO4, pH, and TDS.
              ha='center', va='center', fontsize=12)
     
     # Right rectangle
-    tdslabels = ['0.0', '500', '1000', '1500', '2000', '2500', '3000', '3500']
+    tdslabels = ['0.0', '500', '', '1500', '', '2500', '', '3500']
     for i, x in enumerate(np.linspace(1, 2.618, 9)):
         ax.plot([x, x], 
                 [0, ticklength], 
