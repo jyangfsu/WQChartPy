@@ -100,7 +100,11 @@ HFE-D| from wqchartpy import hfed; hfed.plot(df, unit, figname, figformat)
 
 ### Triangle Piper 
 
-<img src="http://m.qpic.cn/psc?/V5428EvQ2PMkSA3NWIHm4Ak3hg45PLib/TmEUgtj9EK6.7V8ajmQrECmTiF9WFCBK*FqbaC1Gc9x8p0qnA.IgiMoIYsqJbpqLbhokrRynpBx.b4LtRhNGuzcMrO4vXEwgLmeRZte6ItI!/b&bo=yQQ4BAAAAAABF8E!&rf=viewer_4" width="400"/>  
+<img src="http://m.qpic.cn/psc?/V5428EvQ2PMkSA3NWIHm4Ak3hg45PLib/TmEUgtj9EK6.7V8ajmQrECmTiF9WFCBK*FqbaC1Gc9x8p0qnA.IgiMoIYsqJbpqLbhokrRynpBx.b4LtRhNGuzcMrO4vXEwgLmeRZte6ItI!/b&bo=yQQ4BAAAAAABF8E!&rf=viewer_4" width="400"/>
+
+### Triangle Piper with color varying accorss TDS values
+
+<img src="http://m.qpic.cn/psc?/V5428EvQ2PMkSA3NWIHm4Ak3hg45PLib/TmEUgtj9EK6.7V8ajmQrEBru*QgAOH7Q*HFhoW*r.ZSdVPFpNMgWY06mi6kr023QxWX1LysoKTNSjvZsYZQFGB4BAkAqV*ER4H97ojaeg24!/b&bo=ZAU4BAAAAAABF20!&rf=viewer_4" width="400"/>
 
 ### Rectangle Piper
 
