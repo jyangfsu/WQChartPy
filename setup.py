@@ -29,7 +29,7 @@ DISTNAME = 'wqchartpy'
 MAINTAINER = 'Jing Yang'
 MAINTAINER_EMAIL = 'jingyang@cug.edu.cn'
 LICENSE = 'GNU General Public License v3.0'
-VERSION = '0.1.8'
+VERSION = '0.1.9'
 PYTHON_REQUIRES = ">=3.7"
 
 INSTALL_REQUIRES = [
@@ -60,6 +60,7 @@ if __name__ == "__main__":
         url='https://www.github.com/jyangfsu/WQChartPy',
         license=LICENSE,
         packages = find_packages(),
+        include_package_data=True,
         python_requires=PYTHON_REQUIRES,
         install_requires=INSTALL_REQUIRES,
     )
