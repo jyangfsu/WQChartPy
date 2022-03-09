@@ -153,7 +153,7 @@ HFE-D| from wqchartpy import hfed; hfed.plot(df, unit, figname, figformat)
 
 ## How to cite
 
-Jing Yang, Honghua Liu, Zhonghua Tang, Luk Peeters, Ming Ye. 2021. Visualization of water geochemistry data using Python and WQChartPy. Submitted for publication in Groundwater.
+Yang, J., Liu, H., Tang, Z., Peeters, L. and Ye, M. (2022), Visualization of Aqueous Geochemical Data Using Python and WQChartPy. Groundwater. https://doi.org/10.1111/gwat.13185
 
 ## License
 
