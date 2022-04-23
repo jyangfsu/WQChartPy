@@ -262,7 +262,7 @@ def plot(df,
         try:
             x = df.at[i, 'Cl'] / ions_WEIGHT['Cl'] / \
                 (df.at[i, 'Cl'] / ions_WEIGHT['Cl'] + \
-                 df.at[i, 'Cl'] / ions_WEIGHT['HCO3'])
+                 df.at[i, 'HCO3'] / ions_WEIGHT['HCO3'])
             y = df.at[i, 'TDS']
             ax2.scatter(x, y, 
                         marker=df.at[i, 'Marker'],
