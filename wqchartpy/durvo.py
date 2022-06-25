@@ -5,6 +5,7 @@ Created on Wed Sep 30 20:51:33 2020
 @author: Jing
 """
 import os
+import math
 import numpy as np
 import pandas as pd
 import matplotlib as mpl
@@ -157,18 +158,6 @@ Cl, SO4, pH, and TDS.
         ax.plot([0, ticklength], 
                 [x, x], 
                 'k', lw=1.0)
-        
-    # Bottom rectangle
-    pHlabels = ['6', '6.5', '7', '7.5', '8', '8.5', '9', '9.5']
-    for i, x in enumerate(np.linspace(0, -0.618, 8)):
-        ax.plot([0, ticklength], 
-                [x, x], 
-                'k', lw=1.0)
-        if i in [2, 4, 6]:
-            ax.text(-2 * ticklength, x, pHlabels[i], 
-                    ha='center', va='center')
-    plt.text(-0.12, -0.618 / 2, 'pH', rotation=90, 
-             ha='center', va='center', fontsize=12)
     
     # Right rectangle
     tdslabels = ['0.0', '500', '', '1500', '', '2500', '', '3500']
@@ -232,12 +221,15 @@ Cl, SO4, pH, and TDS.
     an[:, 1] = meqL[:, 7] / suman                       # Percentage SO4
     
     # Convert into cartesian coordinates
+    minpH = math.floor(np.min(meqL[:, 8]))
+    maxpH = math.ceil(np.max(meqL[:, 8]))
+    
     cat_x = -np.sin(np.pi / 3.0) * (1 -  cat[:, 2] - cat[:, 0])
     cat_y = np.sin(np.pi / 6.0) * (1 -  cat[:, 2] - cat[:, 0]) + cat[:, 0]
     an_x = np.sin(np.pi / 6.0) * (1 - an[:, 2]) + np.sin(np.pi / 6.0) * an[:, 0] 
     an_y = 1 + np.sin(np.pi / 3.0) * (1 - an[:, 2] - an[:, 0])
     tds_x = 1 + (meqL[:, 9] - 0) / (4 - 0) * 1.618
-    ph_y = -(meqL[:, 8] - 6.0) / (9.5 - 6.0) * 0.618
+    ph_y = -(meqL[:, 8] - minpH) / (maxpH - minpH) * 0.618
     
     # Plot the scatters
     Labels = []
@@ -288,6 +280,19 @@ Cl, SO4, pH, and TDS.
         except(ValueError):
                 pass
             
+    # Bottom rectangle / Adjust the pH labels automatically 
+    # pHlabels = ['6', '6.5', '7', '7.5', '8', '8.5', '9', '9.5']
+    pHlabels = np.linspace(minpH, maxpH, 8)
+    for i, x in enumerate(np.linspace(0, -0.618, 8)):
+        ax.plot([0, ticklength], 
+                [x, x], 
+                'k', lw=1.0)
+        if i in [2, 4, 6]:
+            ax.text(-2 * ticklength, x, round(pHlabels[i], 2), 
+                    ha='right', va='center')
+    plt.text(-0.25, -0.618 / 2, 'pH', rotation=90, 
+             ha='center', va='center', fontsize=12)
+            
     # Creat the legend
     plt.legend(loc='upper left', markerscale=1, frameon=False, fontsize=12,
                labelspacing=0.25, handletextpad=0.25)
@@ -310,7 +315,7 @@ if __name__ == '__main__':
             'Marker' : ['o', 'o', 'o', 'o', 'o', 'o'],
             'Size'   : [30, 30, 30, 30, 30, 30],
             'Alpha'  : [0.6, 0.6, 0.6, 0.6, 0.6, 0.6],
-            'pH'     : [7.8, 7.6, 7.5, 7.7, 7.4, 7.1],
+            'pH'     : [7.8, 7.6, 7.5, 7.7, 7.4, 4.8],
             'Ca'     : [32, 46, 54, 50, 50, 134],
             'Mg'     : [6, 11, 11, 11, 22, 21],
             'Na'     : [28, 17, 16, 25, 25, 39],
