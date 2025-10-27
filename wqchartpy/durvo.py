@@ -348,8 +348,9 @@ Cl, SO4, pH, and TDS.
     plt.text(-0.25, -0.618 / 2, 'pH', rotation=90, 
              ha='center', va='center', fontsize=12)
             
-    # Creat the legend
-    plt.legend(loc='upper left', markerscale=1, frameon=False, fontsize=12,
+    # Create the legend
+    # "bbox_to_anchor" help to put the legend out of the figure.
+    plt.legend(bbox_to_anchor=(1,1), loc='upper left', markerscale=1, frameon=False, fontsize=12,
                labelspacing=0.25, handletextpad=0.25)
     
     # Display the info
