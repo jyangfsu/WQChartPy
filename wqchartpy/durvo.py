@@ -55,7 +55,47 @@ Cl, SO4, pH, and TDS.
         raise RuntimeError("""
         Currently only mg/L and meq/L are supported.
         Convert the unit manually if needed.""")
+    # Convert unit if needed
+    if unit == 'mg/L':
+        gmol = np.array([ions_WEIGHT['Ca'], 
+                     ions_WEIGHT['Mg'], 
+                     ions_WEIGHT['Na'], 
+                     ions_WEIGHT['K'], 
+                     ions_WEIGHT['HCO3'],
+                     ions_WEIGHT['CO3'], 
+                     ions_WEIGHT['Cl'], 
+                     ions_WEIGHT['SO4'],  
+                     1,          # Faked weight for pH
+                     1000])      # Faked weight for TDS to convert mg/L to g/L
+        eqmol = np.array([ions_CHARGE['Ca'], 
+                          ions_CHARGE['Mg'], 
+                          ions_CHARGE['Na'], 
+                          ions_CHARGE['K'], 
+                          ions_CHARGE['HCO3'], 
+                          ions_CHARGE['CO3'], 
+                          ions_CHARGE['Cl'], 
+                          ions_CHARGE['SO4'], 
+                          1,         # Faked charge for pH
+                          1])        # Faked charge for TDS
+        tmpdf = df[['Ca', 'Mg', 'Na', 'K', 'HCO3', 'CO3', 'Cl', 'SO4', 'pH', 'TDS']]
+        dat = tmpdf.values
         
+        meqL = (dat / abs(gmol)) * abs(eqmol)
+        
+    elif unit == 'meq/L':
+        meqL = df[['Ca', 'Mg', 'Na', 'K', 'HCO3', 'CO3', 'Cl', 'SO4', 'pH', 'TDS']].values
+    
+    else:
+        raise RuntimeError("""
+        Currently only mg/L and meq/L are supported.
+        Convert the unit if needed.""")
+    
+    # Get the maximum TDS value to set the TDS labels and figure size.
+    maxtds = round(meqL[:,9].max() * 1000)
+
+    # Set the labels limit for scaling tds axis.
+    limlabel = [3,4,6]    
+
     # Calculate the traingles' location
     h = 0.5 * np.tan(np.pi / 3.0) 
     ltriangle_x = np.array([0, -h, 0, 0])
@@ -65,13 +105,24 @@ Cl, SO4, pH, and TDS.
     
     # Calculate the rectangles' location 
     crectangle_x = np.array([0, 0, 1, 1, 0]) 
-    crectangle_y = np.array([0, 1, 1, 0, 0]) 
-    rrectangle_x = np.array([1, 2.618, 2.618, 1, 1]) 
+    crectangle_y = np.array([0, 1, 1, 0, 0])
+    # Depending on the order of magnitude of the TDS concentration, the label limit is chosen.
+    if maxtds < 1000: 
+        rrectangle_x = np.array([1, limlabel[0], limlabel[0], 1, 1])
+    if maxtds > 1000 and maxtds < 10000:
+        rrectangle_x = np.array([1, limlabel[1], limlabel[1], 1, 1])
+    if maxtds > 10000 and maxtds < 100000:
+        rrectangle_x = np.array([1, limlabel[2], limlabel[2], 1, 1])
     rrectangle_y = np.array([0, 0, 1, 1, 0]) 
     brectangle_x = np.array([0, 1, 1, 0, 0]) 
     brectangle_y = np.array([0, 0, -0.618, -0.618, 0]) 
     
     # Plot the traingles and rectangles
+    # Depending on the order of magnitude of the TDS concentration, the figsize is chosen.
+    if maxtds < 10000:
+        fig_size = (10,10)
+    elif maxtds > 10000 and maxtds < 100000:
+        fig_size = (30,30)
     fig = plt.figure(figsize=(10,10), dpi=100)
     ax = fig.add_subplot(111, aspect='equal', 
                          frameon=False, xticks=[], yticks=[])
@@ -160,53 +211,56 @@ Cl, SO4, pH, and TDS.
                 'k', lw=1.0)
     
     # Right rectangle
-    tdslabels = ['0.0', '500', '', '1500', '', '2500', '', '3500']
-    for i, x in enumerate(np.linspace(1, 2.618, 9)):
+    # Depending on the order of magnitude of the TDS concentration, set the labels.
+    maxtds_str = int(str(maxtds)[1:])
+    if maxtds < 1000 and maxtds_str < 50:
+        maxtdslabel = (maxtds - maxtds_str) + 50
+        tdslabels = [str(i) for i in np.linspace(0, maxtdslabel, 11).astype(int)]
+        cantlabels = (np.linspace(1, len(tdslabels), len(tdslabels))).astype(int)
+        limlabel = limlabel[0]
+        poslabel = limlabel - 1
+    if maxtds < 1000 and maxtds_str > 50:
+        maxtdslabel = (maxtds - maxtds_str) + 100
+        tdslabels = [str(i) for i in np.linspace(0, maxtdslabel, 11).astype(int)]
+        cantlabels = (np.linspace(1, len(tdslabels), len(tdslabels))).astype(int)
+        limlabel = limlabel[0]
+        poslabel = limlabel - 1
+    if maxtds > 1000 and maxtds < 10000 and maxtds_str < 500:
+        maxtdslabel = (maxtds - maxtds_str) + 500
+        tdslabels = [str(i) for i in np.linspace(0, maxtdslabel, 11).astype(int)]
+        cantlabels = (np.linspace(1, len(tdslabels), len(tdslabels))).astype(int)
+        limlabel = limlabel[1]
+        poslabel = limlabel - 1
+    if maxtds > 1000 and maxtds < 10000 and maxtds_str > 500:
+        maxtdslabel = (maxtds - maxtds_str) + 1000
+        tdslabels = [str(i) for i in np.linspace(0, maxtdslabel, 11).astype(int)]
+        cantlabels = (np.linspace(1, len(tdslabels), len(tdslabels))).astype(int)
+        limlabel = limlabel[1]
+        poslabel = limlabel - 1
+    if maxtds > 10000 and maxtds < 100000 and maxtds_str < 5000:
+        maxtdslabel = (maxtds - maxtds_str) + 5000
+        tdslabels = [str(i) for i in np.linspace(0, maxtdslabel, 11).astype(int)]
+        cantlabels = (np.linspace(1, len(tdslabels), len(tdslabels))).astype(int)
+        limlabel = limlabel[2]
+        poslabel = limlabel - 1
+    if maxtds > 10000 and maxtds < 100000 and maxtds_str > 5000:
+        maxtdslabel = (maxtds - maxtds_str) + 10000
+        tdslabels = [str(i) for i in np.linspace(0, maxtdslabel, 11).astype(int)]
+        cantlabels = (np.linspace(1, len(tdslabels), len(tdslabels))).astype(int)
+        limlabel = limlabel[2]
+        poslabel = limlabel - 1
+
+    for i, x in enumerate(np.linspace(1, limlabel, len(cantlabels))):
         ax.plot([x, x], 
                 [0, ticklength], 
                 'k', lw=1.0)
-        if i in [1, 2, 3, 4, 5, 6, 7]:
+        if i in cantlabels:    
             ax.text(x, -2 * ticklength, tdslabels[i], ha='center', va='top')
-    ax.text(1 + 1.618 / 2, -0.12, 'TDS (mg/L)', ha='center', va='top', fontsize=12)
+    ax.text(1 + poslabel / 2, -0.12, 'TDS (mg/L)', ha='center', va='top', fontsize=12)
     
     # Label the watertypes in the central rectangle
     ax.text(0.15, 0.1, 'NaCl', ha='center', va='center', fontsize=12)
     ax.text(0.8, 0.9, 'CaHCO$_3$', ha='center', va='center', fontsize=12)
-    
-    # Convert unit if needed
-    if unit == 'mg/L':
-        gmol = np.array([ions_WEIGHT['Ca'], 
-                     ions_WEIGHT['Mg'], 
-                     ions_WEIGHT['Na'], 
-                     ions_WEIGHT['K'], 
-                     ions_WEIGHT['HCO3'],
-                     ions_WEIGHT['CO3'], 
-                     ions_WEIGHT['Cl'], 
-                     ions_WEIGHT['SO4'],  
-                     1,          # Faked weight for pH
-                     1000])      # Faked weight for TDS to convert mg/L to g/L
-        eqmol = np.array([ions_CHARGE['Ca'], 
-                          ions_CHARGE['Mg'], 
-                          ions_CHARGE['Na'], 
-                          ions_CHARGE['K'], 
-                          ions_CHARGE['HCO3'], 
-                          ions_CHARGE['CO3'], 
-                          ions_CHARGE['Cl'], 
-                          ions_CHARGE['SO4'], 
-                          1,         # Faked charge for pH
-                          1])        # Faked charge for TDS
-        tmpdf = df[['Ca', 'Mg', 'Na', 'K', 'HCO3', 'CO3', 'Cl', 'SO4', 'pH', 'TDS']]
-        dat = tmpdf.values
-        
-        meqL = (dat / abs(gmol)) * abs(eqmol)
-        
-    elif unit == 'meq/L':
-        meqL = df[['Ca', 'Mg', 'Na', 'K', 'HCO3', 'CO3', 'Cl', 'SO4', 'pH', 'TDS']].values
-    
-    else:
-        raise RuntimeError("""
-        Currently only mg/L and meq/L are supported.
-        Convert the unit if needed.""")
     
     # Calculate the percentages
     sumcat = np.sum(meqL[:, 0:4], axis=1)
@@ -228,7 +282,8 @@ Cl, SO4, pH, and TDS.
     cat_y = np.sin(np.pi / 6.0) * (1 -  cat[:, 2] - cat[:, 0]) + cat[:, 0]
     an_x = np.sin(np.pi / 6.0) * (1 - an[:, 2]) + np.sin(np.pi / 6.0) * an[:, 0] 
     an_y = 1 + np.sin(np.pi / 3.0) * (1 - an[:, 2] - an[:, 0])
-    tds_x = 1 + (meqL[:, 9] - 0) / (4 - 0) * 1.618
+    tds_x = [(i * (limlabel - 1) / (maxtdslabel / 1000)) + 1 for i in meqL[:,9]] 
+    #tds_x = 1 + (meqL[:, 9] - 0) / (4 - 0) * 1.618
     ph_y = -(meqL[:, 8] - minpH) / (maxpH - minpH) * 0.618
     
     # Plot the scatters
@@ -293,8 +348,9 @@ Cl, SO4, pH, and TDS.
     plt.text(-0.25, -0.618 / 2, 'pH', rotation=90, 
              ha='center', va='center', fontsize=12)
             
-    # Creat the legend
-    plt.legend(loc='upper left', markerscale=1, frameon=False, fontsize=12,
+    # Create the legend
+    # "bbox_to_anchor" help to put the legend out of the figure.
+    plt.legend(bbox_to_anchor=(1,1), loc='upper left', markerscale=1, frameon=False, fontsize=12,
                labelspacing=0.25, handletextpad=0.25)
     
     # Display the info
